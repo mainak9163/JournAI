@@ -2,9 +2,9 @@
 import { auth } from '@/auth'
 import { prisma } from '@/prisma/prisma'
 import { qaWithAnthropic } from '@/utils/anthropic-integration'
-import { qaWithGemini } from '@/utils/gemini-intergation'
+import { getUserIdByEmail } from '@/utils/fetch-user'
+import { qaWithGemini } from '@/utils/gemini-integration'
 import { qaWithOpenAI } from '@/utils/openai-integration'
-
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
@@ -15,6 +15,14 @@ export const POST = async (request: Request) => {
 
     // Get the current session and user
     const session = await auth()
+
+    if (session?.user) {
+      if (session.user.email) {
+        //storing the id of the user after fetching from database
+        session.user.id = await getUserIdByEmail(session.user.email);
+      }
+    }
+
     if (!session || !session.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }

@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import { prisma } from '@/prisma/prisma';
 import { analyzeEntryWithAnthropic } from '@/utils/anthropic-integration';
+import { getUserIdByEmail } from '@/utils/fetch-user';
 import { analyzeEntryWithGemini } from '@/utils/gemini-integration';
 
 import { analyzeEntryWithOpenAI } from '@/utils/openai-integration';
@@ -31,10 +32,8 @@ async function analyzeJournal(entryId: string, userId: string, content: string):
   if (model === 'openai') {
     analysis = await analyzeEntryWithOpenAI(content);
   } else if (model === 'anthropic') {
-    //@ts-expect-error i need to check ai response
     analysis = await analyzeEntryWithAnthropic(content);
   } else {
-    //@ts-expect-error i need to check ai response
     analysis = await analyzeEntryWithGemini(content);
   }
 
@@ -57,6 +56,14 @@ async function analyzeJournal(entryId: string, userId: string, content: string):
 export async function POST(req: Request, { params }: { params: { id: string } }) {
   try {
     const session = await auth();
+
+    if (session?.user) {
+      if (session.user.email) {
+        //storing the id of the user after fetching from database
+        session.user.id = await getUserIdByEmail(session.user.email);
+      }
+    }
+
     if (!session?.user||!session.user.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const journal = await prisma.journalEntry.findUnique({
@@ -90,6 +97,12 @@ export async function POST(req: Request, { params }: { params: { id: string } })
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   try {
     const session = await auth();
+    if (session?.user) {
+      if (session.user.email) {
+        //storing the id of the user after fetching from database
+        session.user.id = await getUserIdByEmail(session.user.email);
+      }
+    }
     if (!session?.user||!session.user.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const journal = await prisma.journalEntry.findUnique({
@@ -116,6 +129,36 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     });
 
     return NextResponse.json({ analysis: updatedAnalysis }, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}
+
+
+export async function GET(req: Request, { params }: { params: { id: string } }) {
+  try {
+    const session = await auth();
+    if (session?.user) {
+      if (session.user.email) {
+        //storing the id of the user after fetching from database
+        session.user.id = await getUserIdByEmail(session.user.email);
+      }
+    }
+
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const analysis = await prisma.entryAnalysis.findUnique({
+      where: { entryId: params.id, userId: session.user.id },
+    });
+
+    if (!analysis) {
+      return NextResponse.json({ error: 'Analysis not found for this journal entry' }, { status: 404 });
+    }
+
+    return NextResponse.json({ analysis }, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

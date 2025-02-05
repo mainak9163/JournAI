@@ -1,6 +1,7 @@
 
 import { auth } from '@/auth';
 import { prisma } from '@/prisma/prisma';
+import { getUserIdByEmail } from '@/utils/fetch-user';
 import { NextResponse } from 'next/server';
 
 
@@ -28,6 +29,13 @@ async function analyzeMoodAndColor(content: string) {
 export async function POST(req: Request) {
   try {
     const session = await auth();
+    if (session?.user) {
+      if (session.user.email) {
+        //storing the id of the user after fetching from database
+        session.user.id = await getUserIdByEmail(session.user.email);
+      }
+    }
+
     if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const { subject, content } = await req.json();
@@ -61,6 +69,13 @@ export async function GET() {
     const session = await auth();
     if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
+    if (session?.user) {
+      if (session.user.email) {
+        //storing the id of the user after fetching from database
+        session.user.id = await getUserIdByEmail(session.user.email);
+      }
+    }
+    
     const journals = await prisma.journalEntry.findMany({
       where: { userId: session.user.id },
       select: { id: true, subject: true, createdAt: true, status: true },

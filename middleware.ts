@@ -18,3 +18,9 @@ export default auth((req) => {
   // Allow requests to proceed as normal for / or when session exists
   return
 })
+
+//this is very important otherwise when not logged in, you will caught in a loop for continuous fetch for /login page
+//since pathname will be different when fetching favicons and all 
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+}

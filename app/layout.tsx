@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'AI Journal App to record your daily thoughts and ideas',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

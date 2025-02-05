@@ -1,11 +1,18 @@
 import { auth } from '@/auth';
 import { prisma } from '@/prisma/prisma';
+import { getUserIdByEmail } from '@/utils/fetch-user';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-      const session = await auth();
-      
+    const session = await auth();
+    
+      if (session?.user) {
+        if (session.user.email) {
+          //storing the id of the user after fetching from database
+          session.user.id = await getUserIdByEmail(session.user.email);
+        }
+      }
     if (!session?.user || !session.user.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const { journalId, recipientEmail } = await req.json();

@@ -1,12 +1,20 @@
 
 import { auth } from '@/auth';
 import { prisma } from '@/prisma/prisma';
+import { getUserIdByEmail } from '@/utils/fetch-user';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
     const session = await auth();
     if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    if (session?.user) {
+      if (session.user.email) {
+        //storing the id of the user after fetching from database
+        session.user.id = await getUserIdByEmail(session.user.email);
+      }
+    }
 
     const journal = await prisma.journalEntry.findUnique({
       where: { id: params.id, userId: session.user.id },
@@ -24,7 +32,15 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   try {
     const session = await auth();
+    
     if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    if (session?.user) {
+      if (session.user.email) {
+        //storing the id of the user after fetching from database
+        session.user.id = await getUserIdByEmail(session.user.email);
+      }
+    }
 
     const { subject, content, status } = await req.json();
 
@@ -45,6 +61,13 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     const session = await auth();
     if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
+    if (session?.user) {
+      if (session.user.email) {
+        //storing the id of the user after fetching from database
+        session.user.id = await getUserIdByEmail(session.user.email);
+      }
+    }
+    
     await prisma.journalEntry.delete({
       where: { id: params.id, userId: session.user.id },
     });
