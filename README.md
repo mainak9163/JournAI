@@ -1,49 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with
-[`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<a href="https://novel.sh">
+  <img alt="Novel is a Notion-style WYSIWYG editor with AI-powered autocompletions." src="https://novel.sh/opengraph-image.png">
+  <h1 align="center">Novel</h1>
+</a>
 
-## Getting Started
+<p align="center">
+  An open-source Notion-style WYSIWYG editor with AI-powered autocompletions. 
+</p>
 
-First, run the development server:
+<p align="center">
+  <a href="https://news.ycombinator.com/item?id=36360789"><img src="https://img.shields.io/badge/Hacker%20News-369-%23FF6600" alt="Hacker News"></a>
+  <a href="https://github.com/steven-tey/novel/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/steven-tey/novel?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
+  </a>
+  <a href="https://github.com/steven-tey/novel"><img src="https://img.shields.io/github/stars/steven-tey/novel?style=social" alt="Novel.sh's GitHub repo"></a>
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+<p align="center">
+  <a href="#introduction"><strong>Introduction</strong></a> ·
+  <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
+  <a href="#setting-up-locally"><strong>Setting Up Locally</strong></a> ·
+  <a href="#tech-stack"><strong>Tech Stack</strong></a> ·
+  <a href="#contributing"><strong>Contributing</strong></a> ·
+  <a href="#license"><strong>License</strong></a>
+</p>
+<br/>
+
+## Docs (WIP)
+
+https://novel.sh/docs/introduction
+
+## Introduction
+
+[Novel](https://novel.sh/) is a Notion-style WYSIWYG editor with AI-powered autocompletions.
+
+https://github.com/steven-tey/novel/assets/28986134/2099877f-4f2b-4b1c-8782-5d803d63be5c
+
+<br />
+
+## Deploy Your Own
+
+You can deploy your own version of Novel to Vercel with one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://stey.me/novel-deploy)
+
+## Setting Up Locally
+
+To set up Novel locally, you'll need to clone the repository and set up the following environment variables:
+
+- `OPENAI_API_KEY` – your OpenAI API key (you can get one [here](https://platform.openai.com/account/api-keys))
+- `BLOB_READ_WRITE_TOKEN` – your Vercel Blob read/write token (currently [still in beta](https://vercel.com/docs/storage/vercel-blob/quickstart#quickstart), but feel free to [sign up on this form](https://vercel.fyi/blob-beta) for access)
+
+If you've deployed this to Vercel, you can also use [`vc env pull`](https://vercel.com/docs/cli/env#exporting-development-environment-variables) to pull the environment variables from your Vercel project.
+
+To run the app locally, you can run the following commands:
+
+```
+pnpm i
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the
-result.
+## Cross-framework support
 
-You can start editing the page by modifying `app/page.tsx`. The page
-auto-updates as you edit the file.
+While Novel is built for React, we also have a few community-maintained packages for non-React frameworks:
 
-This project uses
-[`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
-to automatically optimize and load [Geist](https://vercel.com/font), a new font
-family for Vercel.
+- Svelte: https://novel.sh/svelte
+- Vue: https://novel.sh/vue
 
-## Learn More
+## VSCode Extension
 
-To learn more about Next.js, take a look at the following resources:
+Thanks to @bennykok, Novel also has a VSCode Extension: https://novel.sh/vscode
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+https://github.com/steven-tey/novel/assets/28986134/58ebf7e3-cdb3-43df-878b-119e304f7373
 
-You can check out
-[the Next.js GitHub repository](https://github.com/vercel/next.js) - your
-feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+Novel is built on the following stack:
 
-The easiest way to deploy your Next.js app is to use the
-[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
+- [Next.js](https://nextjs.org/) – framework
+- [Tiptap](https://tiptap.dev/) – text editor
+- [OpenAI](https://openai.com/) - AI completions
+- [Vercel AI SDK](https://sdk.vercel.ai/docs) – AI library
+- [Vercel](https://vercel.com) – deployments
+- [TailwindCSS](https://tailwindcss.com/) – styles
+- [Cal Sans](https://github.com/calcom/font) – font
 
-Check out our
-[Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying)
-for more details.
+## Contributing
+
+Here's how you can contribute:
+
+- [Open an issue](https://github.com/steven-tey/novel/issues) if you believe you've encountered a bug.
+- Make a [pull request](https://github.com/steven-tey/novel/pull) to add new features/make quality-of-life improvements/fix bugs.
+
+<a href="https://github.com/steven-tey/novel/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=steven-tey/novel" />
+</a>
+
+## Repo Activity
+
+![Novel.sh repo activity – generated by Axiom](https://repobeats.axiom.co/api/embed/2ebdaa143b0ad6e7c2ee23151da7b37f67da0b36.svg)
+
+## License
+
+Licensed under the [Apache-2.0 license](https://github.com/steven-tey/novel/blob/main/LICENSE).

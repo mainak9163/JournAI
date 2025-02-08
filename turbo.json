@@ -1,0 +1,75 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "**/.env.*local"
+  ],
+  "tasks": {
+    "topo": {
+      "dependsOn": [
+        "^topo"
+      ]
+    },
+    "build": {
+      "dependsOn": [
+        "^build",
+        "typecheck",
+        "^db:generate"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**"
+      ]
+    },
+    "typecheck": {
+      "dependsOn": [
+        "^topo"
+      ],
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": [
+        "^topo"
+      ]
+    },
+    "format": {
+      "dependsOn": [
+        "^topo"
+      ]
+    },
+    "lint:fix": {
+      "dependsOn": [
+        "^topo"
+      ]
+    },
+    "format:fix": {
+      "dependsOn": [
+        "^topo"
+      ]
+    },
+    "check-types": {},
+    "dev": {
+      "dependsOn": [
+        "^db:generate"
+      ],
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "release": {
+      "cache": false
+    },
+    "db:generate": {
+      "cache": false
+    },
+    "db:migrate": {
+      "cache": false,
+      "persistent": true
+    },
+    "db:deploy": {
+      "cache": false
+    }
+  }
+}

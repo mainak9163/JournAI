@@ -1,0 +1,155 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output = "../generated/client"
+}
+
+model User {
+    id             String          @id @default(cuid())
+    name           String?
+    email          String          @unique
+    emailVerified  DateTime?
+    image          String?
+    accounts       Account[]
+    sessions       Session[]
+    authenticator  Authenticator[]
+    journalEntries JournalEntry[] // Journals created by this user
+    journalShares  JournalShare[]  @relation("SharedByUserRelation") // Journals this user shared
+    sharedWithMe   JournalShare[]  @relation("SharedWithUserRelation") // Journals shared with this user
+
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    EntryAnalysis EntryAnalysis[]
+}
+
+model Account {
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String?
+    access_token      String?
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String?
+    session_state     String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@id([provider, providerAccountId])
+}
+
+model Session {
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+    identifier String
+    token      String
+    expires    DateTime
+
+    @@id([identifier, token])
+}
+
+model Authenticator {
+    credentialID         String  @unique
+    userId               String
+    providerAccountId    String
+    credentialPublicKey  String
+    counter              Int
+    credentialDeviceType String
+    credentialBackedUp   Boolean
+    transports           String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@id([userId, credentialID])
+}
+
+enum JOURNAL_ENTRY_STATUS {
+    DRAFT
+    PUBLISHED
+    ARCHIVED
+}
+
+model JournalEntry {
+    id        String               @id @default(cuid())
+    userId    String
+    user      User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt DateTime             @default(now())
+    updatedAt DateTime             @updatedAt
+    subject   String
+    content   String               @db.Text
+    status    JOURNAL_ENTRY_STATUS @default(DRAFT)
+
+    // mood and mood color
+    mood  String @db.Text
+    color String @default("#0101fe") @db.Text
+
+    analysis EntryAnalysis?
+    shares   JournalShare[] @relation("SharedJournals")
+}
+
+model EntryAnalysis {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    entryId String
+    entry   JournalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    // Big Five Personality Traits (0-100 scores)
+    openness          Int
+    conscientiousness Int
+    extraversion      Int
+    agreeableness     Int
+    neuroticism       Int
+
+    // MBTI Type
+    mbtiType        String // e.g. "ENFP"
+    mbtiDescription String @db.Text
+
+    // Strengths and Growth Areas
+    strengths   String[] // Array of strength descriptions
+    growthAreas String[] // Array of growth area descriptions
+
+    // Career Suggestions
+    careerSuggestions String[] // Array of career suggestions
+
+    @@unique([entryId])
+    @@index([userId])
+}
+
+model JournalShare {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+
+    journalId String
+    journal   JournalEntry @relation(fields: [journalId], references: [id], onDelete: Cascade, name: "SharedJournals")
+
+    sharedByUserId String
+    sharedByUser   User   @relation(fields: [sharedByUserId], references: [id], onDelete: Cascade, name: "SharedByUserRelation")
+
+    sharedWithUserId String
+    sharedWithUser   User   @relation(fields: [sharedWithUserId], references: [id], onDelete: Cascade, name: "SharedWithUserRelation")
+
+    @@unique([journalId, sharedWithUserId]) // Prevents duplicate sharing with the same user
+    @@index([journalId, sharedByUserId]) // Ensures valid journal-user relationship
+}
