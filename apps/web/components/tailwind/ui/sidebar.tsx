@@ -6,12 +6,12 @@ import { PanelLeft } from "lucide-react";
 import * as React from "react";
 
 import { useIsMobile } from "@/components/hooks/use-mobile";
+import { Button } from "@/components/tailwind/ui/button";
+import { Input } from "@/components/tailwind/ui/input";
 import { Separator } from "@/components/tailwind/ui/separator";
 import { Sheet, SheetContent } from "@/components/tailwind/ui/sheet";
 import { Skeleton } from "@/components/tailwind/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/tailwind/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
@@ -143,7 +143,10 @@ const Sidebar = React.forwardRef<
   if (collapsible === "none") {
     return (
       <div
-        className={cn("flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground", className)}
+        className={cn(
+          "flex h-full w-[--sidebar-width] flex-col bg-sidebar !text-sidebar-foreground !border-border",
+          className,
+        )}
         ref={ref}
         {...props}
       >

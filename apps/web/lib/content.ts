@@ -4,87 +4,35 @@ export const defaultEditorContent = {
     {
       type: "heading",
       attrs: { level: 2 },
-      content: [{ type: "text", text: "Introducing Novel" }],
+      content: [{ type: "text", text: "Welcome to JournAI" }],
     },
     {
       type: "paragraph",
       content: [
         {
           type: "text",
-          marks: [
-            {
-              type: "link",
-              attrs: {
-                href: "https://github.com/steven-tey/novel",
-                target: "_blank",
-              },
-            },
-          ],
-          text: "Novel",
+          text: "JournAI is an AI-powered journaling website that enhances your writing experience with smart features. Whether you want to record your thoughts, analyze your personality, or chat with past entries, JournAI is here to assist you.",
         },
-        {
-          type: "text",
-          text: " is a Notion-style WYSIWYG editor with AI-powered autocompletion. Built with ",
-        },
-        {
-          type: "text",
-          marks: [
-            {
-              type: "link",
-              attrs: {
-                href: "https://tiptap.dev/",
-                target: "_blank",
-              },
-            },
-          ],
-          text: "Tiptap",
-        },
-        { type: "text", text: " + " },
-        {
-          type: "text",
-          marks: [
-            {
-              type: "link",
-              attrs: {
-                href: "https://sdk.vercel.ai/docs",
-                target: "_blank",
-              },
-            },
-          ],
-          text: "Vercel AI SDK",
-        },
-        { type: "text", text: "." },
       ],
     },
     {
       type: "heading",
       attrs: { level: 3 },
-      content: [{ type: "text", text: "Installation" }],
+      content: [{ type: "text", text: "Getting Started" }],
     },
     {
-      type: "codeBlock",
-      attrs: { language: null },
-      content: [{ type: "text", text: "npm i novel" }],
-    },
-    {
-      type: "heading",
-      attrs: { level: 3 },
-      content: [{ type: "text", text: "Usage" }],
-    },
-    {
-      type: "codeBlock",
-      attrs: { language: null },
+      type: "paragraph",
       content: [
         {
           type: "text",
-          text: 'import { Editor } from "novel";\n\nexport default function App() {\n  return (\n     <Editor />\n  )\n}',
+          text: "Visit our website to create your first journal entry and explore AI-powered features that help you gain insights from your writing.",
         },
       ],
     },
     {
       type: "heading",
       attrs: { level: 3 },
-      content: [{ type: "text", text: "Features" }],
+      content: [{ type: "text", text: "Key Features" }],
     },
     {
       type: "orderedList",
@@ -95,7 +43,7 @@ export const defaultEditorContent = {
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "Slash menu & bubble menu" }],
+              content: [{ type: "text", text: "Rich Text Formatting (H1, H2, H3, bold, italics, underline, etc.)" }],
             },
           ],
         },
@@ -104,14 +52,7 @@ export const defaultEditorContent = {
           content: [
             {
               type: "paragraph",
-              content: [
-                { type: "text", text: "AI autocomplete (type " },
-                { type: "text", marks: [{ type: "code" }], text: "++" },
-                {
-                  type: "text",
-                  text: " to activate, or select from slash menu)",
-                },
-              ],
+              content: [{ type: "text", text: "AI Assistance for Smart Suggestions and Autocompletion" }],
             },
           ],
         },
@@ -120,12 +61,7 @@ export const defaultEditorContent = {
           content: [
             {
               type: "paragraph",
-              content: [
-                {
-                  type: "text",
-                  text: "Image uploads (drag & drop / copy & paste, or select from slash menu) ",
-                },
-              ],
+              content: [{ type: "text", text: "Mathematical Equations with LaTeX Support" }],
             },
           ],
         },
@@ -134,18 +70,7 @@ export const defaultEditorContent = {
           content: [
             {
               type: "paragraph",
-              content: [
-                {
-                  type: "text",
-                  text: "Add tweets from the command slash menu:",
-                },
-              ],
-            },
-            {
-              type: "twitter",
-              attrs: {
-                src: "https://x.com/elonmusk/status/1800759252224729577",
-              },
+              content: [{ type: "text", text: "Personality Analysis Based on Your Journal Entries" }],
             },
           ],
         },
@@ -154,103 +79,7 @@ export const defaultEditorContent = {
           content: [
             {
               type: "paragraph",
-              content: [
-                {
-                  type: "text",
-                  text: "Mathematical symbols with LaTeX expression:",
-                },
-              ],
-            },
-            {
-              type: "orderedList",
-              attrs: {
-                tight: true,
-                start: 1,
-              },
-              content: [
-                {
-                  type: "listItem",
-                  content: [
-                    {
-                      type: "paragraph",
-                      content: [
-                        {
-                          type: "math",
-                          attrs: {
-                            latex: "E = mc^2",
-                          },
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  type: "listItem",
-                  content: [
-                    {
-                      type: "paragraph",
-                      content: [
-                        {
-                          type: "math",
-                          attrs: {
-                            latex: "a^2 = \\sqrt{b^2 + c^2}",
-                          },
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  type: "listItem",
-                  content: [
-                    {
-                      type: "paragraph",
-                      content: [
-                        {
-                          type: "math",
-                          attrs: {
-                            latex:
-                              "\\hat{f} (\\xi)=\\int_{-\\infty}^{\\infty}f(x)e^{-2\\pi ix\\xi}dx",
-                          },
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  type: "listItem",
-                  content: [
-                    {
-                      type: "paragraph",
-                      content: [
-                        {
-                          type: "math",
-                          attrs: {
-                            latex:
-                              "A=\\begin{bmatrix}a&b\\\\c&d \\end{bmatrix}",
-                          },
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  type: "listItem",
-                  content: [
-                    {
-                      type: "paragraph",
-                      content: [
-                        {
-                          type: "math",
-                          attrs: {
-                            latex: "\\sum_{i=0}^n x_i",
-                          },
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
+              content: [{ type: "text", text: "Chat with Your Past Entries to Reflect and Gain Insights" }],
             },
           ],
         },
@@ -259,18 +88,16 @@ export const defaultEditorContent = {
     {
       type: "image",
       attrs: {
-        src: "https://public.blob.vercel-storage.com/pJrjXbdONOnAeZAZ/banner-2wQk82qTwyVgvlhTW21GIkWgqPGD2C.png",
-        alt: "banner.png",
-        title: "banner.png",
-        width: null,
-        height: null,
+        src: "https://your-image-url.com/journai-banner.png",
+        alt: "JournAI banner",
+        title: "JournAI",
       },
     },
     { type: "horizontalRule" },
     {
       type: "heading",
       attrs: { level: 3 },
-      content: [{ type: "text", text: "Learn more" }],
+      content: [{ type: "text", text: "Get Started with JournAI" }],
     },
     {
       type: "taskList",
@@ -281,22 +108,7 @@ export const defaultEditorContent = {
           content: [
             {
               type: "paragraph",
-              content: [
-                { type: "text", text: "Star us on " },
-                {
-                  type: "text",
-                  marks: [
-                    {
-                      type: "link",
-                      attrs: {
-                        href: "https://github.com/steven-tey/novel",
-                        target: "_blank",
-                      },
-                    },
-                  ],
-                  text: "GitHub",
-                },
-              ],
+              content: [{ type: "text", text: "Sign up and start journaling today" }],
             },
           ],
         },
@@ -306,22 +118,7 @@ export const defaultEditorContent = {
           content: [
             {
               type: "paragraph",
-              content: [
-                { type: "text", text: "Install the " },
-                {
-                  type: "text",
-                  marks: [
-                    {
-                      type: "link",
-                      attrs: {
-                        href: "https://www.npmjs.com/package/novel",
-                        target: "_blank",
-                      },
-                    },
-                  ],
-                  text: "NPM package",
-                },
-              ],
+              content: [{ type: "text", text: "Explore AI-powered insights and suggestions" }],
             },
           ],
         },
@@ -331,22 +128,7 @@ export const defaultEditorContent = {
           content: [
             {
               type: "paragraph",
-              content: [
-                {
-                  type: "text",
-                  marks: [
-                    {
-                      type: "link",
-                      attrs: {
-                        href: "https://vercel.com/templates/next.js/novel",
-                        target: "_blank",
-                      },
-                    },
-                  ],
-                  text: "Deploy your own",
-                },
-                { type: "text", text: " to Vercel" },
-              ],
+              content: [{ type: "text", text: "Analyze your emotions and personality with AI" }],
             },
           ],
         },

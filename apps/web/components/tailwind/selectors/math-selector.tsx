@@ -10,7 +10,7 @@ export const MathSelector = () => {
 
   return (
     <Button
-      variant="ghost"
+      variant="secondary"
       size="sm"
       className="rounded-none w-12"
       onClick={(evt) => {
@@ -26,10 +26,7 @@ export const MathSelector = () => {
         }
       }}
     >
-      <SigmaIcon
-        className={cn("size-4", { "text-blue-500": editor.isActive("math") })}
-        strokeWidth={2.3}
-      />
+      <SigmaIcon className={cn("size-4", { "text-blue-500": editor.isActive("math") })} strokeWidth={2.3} />
     </Button>
   );
 };

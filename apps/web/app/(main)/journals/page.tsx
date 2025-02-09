@@ -1,41 +1,69 @@
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { JournalCard } from "../components/journal-card"
+"use client";
 
-const dummyJournals = [
-  {
-    id: 1,
-    title: "A great day",
-    date: "2024-01-25",
-    content: "Today was amazing...",
-    sentimentAnalysis: "positive",
-  },
-  {
-    id: 2,
-    title: "Feeling thoughtful",
-    date: "2024-01-24",
-    content: "Reflecting on life...",
-    sentimentAnalysis: null,
-  },
-  // Add more dummy journals...
-]
+import { Input } from "@/components/tailwind/ui/input";
+import { AnimatePresence, motion } from "framer-motion";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { JournalCard } from "../components/journal-card";
+import { NewJournalCard } from "../components/new-journal-card";
 
 export default function JournalsPage() {
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Your Journals</h2>
-        <Input placeholder="Search by title..." className="max-w-sm" />
-      </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {dummyJournals.map((journal) => (
-          <JournalCard key={journal.id} journal={journal} />
-        ))}
-      </div>
-      <div className="flex justify-center">
-        <Button variant="outline">Load more</Button>
-      </div>
-    </div>
-  )
-}
+  const [journals, setJournals] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    fetchJournals();
+  }, []);
+
+  const fetchJournals = async () => {
+    try {
+      const response = await fetch("/api/journal");
+      const data = await response.json();
+      setJournals(data.journals);
+    } catch (error) {
+      console.error("Failed to fetch journals:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const filteredJournals = journals.filter((journal) =>
+    journal.subject.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-8">
+        <div>
+          <h1 className="text-4xl font-bold mb-2">Your Journals</h1>
+          <p className="text-muted-foreground">{journals.length} entries in your collection</p>
+        </div>
+        <Input
+          placeholder="Search journals..."
+          className="max-w-sm"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
+      {isLoading ? (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center gap-2">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-sm text-muted-foreground">Loading your journals...</p>
+          </div>
+        </div>
+      ) : (
+        <motion.div layout className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <NewJournalCard />
+          <AnimatePresence mode="popLayout">
+            {filteredJournals.map((journal) => (
+              <JournalCard key={journal.id} journal={journal} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      )}
+    </div>
+  );
+}

@@ -35,7 +35,7 @@ const hljs = require("highlight.js");
 
 const extensions = [...defaultExtensions, slashCommand];
 
-const TailwindAdvancedEditor = () => {
+const TailwindAdvancedEditor = ({ setContent }) => {
   const [initialContent, setInitialContent] = useState<null | JSONContent>(null);
   const [saveStatus, setSaveStatus] = useState("Saved");
   const [charsCount, setCharsCount] = useState();
@@ -56,6 +56,7 @@ const TailwindAdvancedEditor = () => {
 
   const debouncedUpdates = useDebouncedCallback(async (editor: EditorInstance) => {
     const json = editor.getJSON();
+    setContent(JSON.stringify(json)); //updating the content in the parent component so that it can be sent to the server
     setCharsCount(editor.storage.characterCount.words());
     window.localStorage.setItem("html-content", highlightCodeblocks(editor.getHTML()));
     window.localStorage.setItem("novel-content", JSON.stringify(json));
@@ -65,8 +66,14 @@ const TailwindAdvancedEditor = () => {
 
   useEffect(() => {
     const content = window.localStorage.getItem("novel-content");
-    if (content) setInitialContent(JSON.parse(content));
-    else setInitialContent(defaultEditorContent);
+    const markdown = window.localStorage.getItem("markdown"); //just json is not enough since even when theres no text there is a json representation and so its never null
+    if (markdown) {
+      setContent(content); //at the end we need to use the jsons
+      setInitialContent(JSON.parse(content));
+    } else {
+      setContent(defaultEditorContent);
+      setInitialContent(defaultEditorContent);
+    }
   }, []);
 
   if (!initialContent) return null;

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import "@/styles/prosemirror.css";
+import "katex/dist/katex.min.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { fonts } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "AI Journal App",
@@ -20,6 +22,7 @@ export default async function RootLayout({
       <body className={cn("min-h-screen font-sans antialiased", fonts)}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           {children}
+          <Toaster richColors />
         </ThemeProvider>
       </body>
     </html>
