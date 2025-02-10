@@ -1,84 +1,28 @@
-"use client";
+import { cookies } from "next/headers";
+import EditorComponent from "./editor";
 
-import TailwindAdvancedEditor from "@/components/tailwind/advanced-editor";
-import { Input } from "@/components/tailwind/ui/input";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { Loader2, SendHorizonal } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
+async function EditorPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const entryId = (await searchParams).entryId;
+  if (!entryId) return <EditorComponent />;
 
-function EditorPage() {
-  const [subject, setSubject] = useState("");
-  const [content, setContent] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // Get the cookies from the request
+  const cookieStore = cookies();
 
-  const handleSubmitJournal = async () => {
-    if (!subject.trim() || !content.trim()) {
-      toast.error("Please fill in both title and content");
-      return;
-    }
+  // Make the API call with credentials and cookies
+  const res = await fetch(`http://localhost:3000/api/journal/${entryId}`, {
+    headers: {
+      Cookie: cookieStore.toString(), //since its a server to server request, we need to pass the cookies
+    },
+    credentials: "include",
+  });
 
-    setIsSubmitting(true);
-    try {
-      const res = await fetch("/api/journal", {
-        method: "POST",
-        body: JSON.stringify({ subject, content }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const response = await res.json();
-      if (!response.journal) {
-        toast.error(response.error);
-      } else {
-        toast.success("Journal entry created successfully");
-        setSubject("");
-        setContent("");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to create journal entry");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <div className="flex flex-col gap-3 max-w-screen-lg mx-auto">
-      <div className="flex gap-2 items-center w-full justify-between">
-        <Input
-          placeholder="Enter title"
-          className="w-72 sm:w-96"
-          value={subject}
-          onChange={(e) => {
-            setSubject(e.target.value);
-          }}
-        />
-        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-          <Button
-            onClick={handleSubmitJournal}
-            disabled={isSubmitting || !subject.trim() || !content.trim()}
-            className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-medium px-6 mr-3"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
-              </>
-            ) : (
-              <>
-                <SendHorizonal className="mr-2 h-4 w-4" />
-                Submit
-              </>
-            )}
-          </Button>
-        </motion.div>
-      </div>
-      <TailwindAdvancedEditor setContent={setContent} />
-    </div>
-  );
+  const response = await res.json();
+  console.log(response);
+  return <EditorComponent journal={response.journal} />;
 }
 
 export default EditorPage;

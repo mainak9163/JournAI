@@ -35,8 +35,8 @@ const hljs = require("highlight.js");
 
 const extensions = [...defaultExtensions, slashCommand];
 
-const TailwindAdvancedEditor = ({ setContent }) => {
-  const [initialContent, setInitialContent] = useState<null | JSONContent>(null);
+const TailwindAdvancedEditor = ({ content, setContent }) => {
+  const [initialContent, setInitialContent] = useState<null | JSONContent>(JSON.parse(content)); //either content is empty since new journal or contains json string for a specific entry being edited
   const [saveStatus, setSaveStatus] = useState("Saved");
   const [charsCount, setCharsCount] = useState();
 
@@ -65,6 +65,7 @@ const TailwindAdvancedEditor = ({ setContent }) => {
   }, 500);
 
   useEffect(() => {
+    if (initialContent) return; //if intial content is already set then no need to set it again
     const content = window.localStorage.getItem("novel-content");
     const markdown = window.localStorage.getItem("markdown"); //just json is not enough since even when theres no text there is a json representation and so its never null
     if (markdown) {
@@ -76,7 +77,7 @@ const TailwindAdvancedEditor = ({ setContent }) => {
     }
   }, []);
 
-  if (!initialContent) return null;
+  if (!initialContent) return null; //very imp one liner
 
   return (
     <div className="relative w-full max-w-screen-lg">

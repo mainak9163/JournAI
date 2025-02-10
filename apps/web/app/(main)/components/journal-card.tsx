@@ -75,7 +75,7 @@ export function JournalCard({ journal }) {
           </div>
 
           <div className="flex gap-2 w-full">
-            <Button variant="outline" className="flex-1" onClick={() => router.push(`/editor/${journal.id}`)}>
+            <Button variant="outline" className="flex-1" onClick={() => router.push(`/editor?entryId=${journal.id}`)}>
               <PencilIcon className="w-4 h-4 mr-2" />
               Edit
             </Button>

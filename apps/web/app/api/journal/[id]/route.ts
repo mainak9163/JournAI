@@ -44,8 +44,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     const { subject, content, status } = await req.json();
 
     const updatedJournal = await prisma.journalEntry.update({
-      where: { id: params.id, userId: session.user.id },
-      data: { subject, content, status },
+      where: { id: (await params).id, userId: session.user.id },
+      data: { subject, content, status: status ? status : "PUBLISHED" },
     });
 
     return NextResponse.json({ journal: updatedJournal }, { status: 200 });
