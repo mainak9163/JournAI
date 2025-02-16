@@ -3,12 +3,17 @@
 import { Badge } from "@/components/tailwind/ui/badge";
 import { Button } from "@/components/tailwind/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/tailwind/ui/card";
+import { Dialog, DialogContent } from "@/components/tailwind/ui/dialog";
+import { ScrollArea } from "@/components/tailwind/ui/scroll-area";
 import { motion } from "framer-motion";
 import { BarChart2, CalendarIcon, PencilIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
+import PersonalityAnalysis from "./personality-analysis";
 
 export function JournalCard({ journal }) {
+  const [analysisOpen, setAnalysisOpen] = useState(false);
   const router = useRouter();
 
   const handleAnalysisClick = () => {
@@ -21,7 +26,8 @@ export function JournalCard({ journal }) {
       });
       return;
     }
-    router.push(`/analysis/${journal.analysis.id}`);
+    setAnalysisOpen(true);
+    // router.push(`/analysis/${journal.analysis.id}`);
   };
 
   const getMoodColor = () => {
@@ -86,6 +92,13 @@ export function JournalCard({ journal }) {
           </div>
         </CardFooter>
       </Card>
+      <Dialog open={analysisOpen} onOpenChange={setAnalysisOpen}>
+        <DialogContent className="max-w-3xl h-[80vh] overflow-y-auto">
+          <ScrollArea className="mt-3">
+            <PersonalityAnalysis analysis={journal.analysis} />
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
     </motion.div>
   );
 }
