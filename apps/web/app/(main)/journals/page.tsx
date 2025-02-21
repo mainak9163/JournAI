@@ -35,9 +35,11 @@ export default function JournalsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row items-center justify-between mb-8">
-        <div>
+        <div className="mb-4 md:mb-0">
           <h1 className="text-4xl font-bold mb-2">Your Journals</h1>
-          <p className="text-muted-foreground">{journals.length} entries in your collection</p>
+          <p className="text-muted-foreground text-center md:text-justify">
+            {journals.length} entries in your collection
+          </p>
         </div>
         <Input
           placeholder="Search journals..."

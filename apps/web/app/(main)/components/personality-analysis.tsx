@@ -61,27 +61,27 @@ const PersonalityAnalysis = ({ analysis }) => {
   ];
 
   // Function to download analysis as JSON
-  const downloadAnalysis = () => {
-    // Create a blob with the JSON data
-    const jsonString = JSON.stringify(analysis, null, 2);
-    const blob = new Blob([jsonString], { type: "application/json" });
+  // const downloadAnalysis = () => {
+  //   // Create a blob with the JSON data
+  //   const jsonString = JSON.stringify(analysis, null, 2);
+  //   const blob = new Blob([jsonString], { type: "application/json" });
 
-    // Create a temporary URL for the blob
-    const url = URL.createObjectURL(blob);
+  //   // Create a temporary URL for the blob
+  //   const url = URL.createObjectURL(blob);
 
-    // Create a temporary link element
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `personality-analysis-${analysis.id}.json`;
+  //   // Create a temporary link element
+  //   const link = document.createElement("a");
+  //   link.href = url;
+  //   link.download = `personality-analysis-${analysis.id}.json`;
 
-    // Append to body, click, and remove
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  //   // Append to body, click, and remove
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
 
-    // Release the URL
-    URL.revokeObjectURL(url);
-  };
+  //   // Release the URL
+  //   URL.revokeObjectURL(url);
+  // };
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-background text-foreground rounded-lg shadow-lg">
@@ -147,6 +147,7 @@ const PersonalityAnalysis = ({ analysis }) => {
           </div>
           <ul className="space-y-2">
             {analysis.strengths.map((strength, index) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               <li key={index} className="flex items-center">
                 <span className="h-2 w-2 bg-primary rounded-full mr-2" />
                 <span>{strength}</span>
@@ -162,6 +163,7 @@ const PersonalityAnalysis = ({ analysis }) => {
           </div>
           <ul className="space-y-2">
             {analysis.growthAreas.map((area, index) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               <li key={index} className="flex items-center">
                 <span className="h-2 w-2 bg-primary rounded-full mr-2" />
                 <span>{area}</span>
@@ -179,6 +181,7 @@ const PersonalityAnalysis = ({ analysis }) => {
         </div>
         <div className="flex flex-wrap gap-4">
           {analysis.careerSuggestions.map((career, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             <div key={index} className="bg-accent text-accent-foreground p-2 px-4 rounded-md w-fit">
               <span>{career}</span>
             </div>

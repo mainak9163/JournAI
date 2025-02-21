@@ -13,20 +13,17 @@ export async function SiteHeader() {
   let stars = 0; // Default value
 
   try {
-    const response = await fetch(
-      "https://api.github.com/repos/magicuidesign/magicui",
-      {
-        headers: process.env.GITHUB_OAUTH_TOKEN
-          ? {
-              Authorization: `Bearer ${process.env.GITHUB_OAUTH_TOKEN}`,
-              "Content-Type": "application/json",
-            }
-          : {},
-        next: {
-          revalidate: 3600,
-        },
+    const response = await fetch("https://api.github.com/repos/magicuidesign/magicui", {
+      headers: process.env.GITHUB_OAUTH_TOKEN
+        ? {
+            Authorization: `Bearer ${process.env.GITHUB_OAUTH_TOKEN}`,
+            "Content-Type": "application/json",
+          }
+        : {},
+      next: {
+        revalidate: 3600,
       },
-    );
+    });
 
     if (response.ok) {
       const data = await response.json();
@@ -42,9 +39,9 @@ export async function SiteHeader() {
         "supports-backdrop-blur:bg-background/90 sticky top-0 z-40 w-full bg-background/40 backdrop-blur-lg",
       )}
     >
-      <div className="container flex h-16 items-center">
+      <div className="container flex h-16 items-center justify-between">
         <MainNav />
-        <div className="flex flex-1 items-center justify-between gap-2 md:justify-end">
+        <div className="flex flex-1 items-center gap-2 justify-end">
           <Link
             className={cn(
               buttonVariants({
@@ -62,19 +59,12 @@ export async function SiteHeader() {
             </div>
             <div className="ml-2 flex items-center gap-1 text-sm md:flex">
               <StarIcon className="size-4 text-gray-500 transition-all duration-300 group-hover:text-yellow-300" />
-              <NumberTicker
-                value={stars}
-                className="font-display font-medium text-white dark:text-black"
-              />
+              <NumberTicker value={stars} className="font-display font-medium text-white dark:text-black" />
             </div>
           </Link>
 
           <nav className="flex items-center gap-1">
-            <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <Link href={siteConfig.links.github} target="_blank" rel="noreferrer">
               <div
                 className={cn(
                   buttonVariants({

@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import moodColors from "@/utils/constants";
 import { getUserIdByEmail } from "@/utils/fetch-user";
 import { prisma } from "@repo/db";
 import { NextResponse } from "next/server";
@@ -16,7 +17,7 @@ async function analyzeMoodAndColor(content: string) {
           {
             parts: [
               {
-                text: `Analyze the following journal entry and determine its MOOD in one word. Also, return a COLOR HEX CODE that best represents the mood such that the color should also be a strong color meaning if it is used as background color to a white text even in dark mode or light mode screen , it as well as the text should be clearly visible:\n\n${content}\n\nResponse format: {"mood": "word", "color": "#RRGGBB"}`,
+                text: `Analyze the following journal entry and determine its MOOD in one word. Also, return a COLOR HEX CODE that best represents the mood.For this take help from this object and try to follow as much as possible, ${JSON.stringify(moodColors)}:\n\nContent:${content}\n\nResponse format: {"mood": "word", "color": "#RRGGBB"}`,
               },
             ],
           },

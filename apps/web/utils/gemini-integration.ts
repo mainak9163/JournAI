@@ -1,22 +1,22 @@
+import { Document } from "@langchain/core/documents";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { PineconeStore } from "@langchain/pinecone";
-import { Document } from "@langchain/core/documents";
-import { getPrompt } from "./prompt";
-import { pinecone } from "./pinecone-client";
+import type { Pinecone } from "@pinecone-database/pinecone";
 import { cookies } from "next/headers";
-import { Pinecone } from "@pinecone-database/pinecone";
+import { pinecone } from "./pinecone-client";
+import { getPrompt } from "./prompt";
 
 const PINECONE_INDEX_NAME = "gemini-indexing";
 // Get API key from cookies
 const getApiKey = async () => {
   const cookieStore = await cookies();
-  return cookieStore.get('apiKey')?.value;
+  return cookieStore.get("apiKey")?.value;
 };
 
 export const analyzeEntryWithGemini = async (entry: string) => {
   const apiKey = await getApiKey();
-  
+
   const model = new ChatGoogleGenerativeAI({
     apiKey,
     modelName: "gemini-1.0-pro", // Free Gemini model
@@ -31,40 +31,39 @@ export const analyzeEntryWithGemini = async (entry: string) => {
     throw new Error("Failed to extract JSON from the output.");
   }
   const jsonObject = JSON.parse(jsonString[1]);
-  console.log(jsonObject)
+  console.log(jsonObject);
   return jsonObject;
 };
 
 //for dealing with pinecone u need indexes
 // Function to ensure index exists
-const ensureIndex = async (pinecone: Pinecone, dimension = 768) => { // 768 is default for Gemini embeddings
+const ensureIndex = async (pinecone: Pinecone, dimension = 768) => {
+  // 768 is default for Gemini embeddings
   // List existing indexes
   const existingIndexes = (await pinecone.listIndexes()).indexes;
-  
+
   // Check if our index exists
-  const indexExists = existingIndexes?.some(
-    (    index: { name: string; }) => index.name === PINECONE_INDEX_NAME
-  );
+  const indexExists = existingIndexes?.some((index: { name: string }) => index.name === PINECONE_INDEX_NAME);
 
   if (!indexExists) {
     console.log(`Creating new index: ${PINECONE_INDEX_NAME}`);
     await pinecone.createIndex({
       name: PINECONE_INDEX_NAME,
       dimension: dimension,
-      metric: 'cosine',
+      metric: "cosine",
       spec: {
         serverless: {
-          cloud: 'aws',
-          region: 'us-east-1'  //free plan only supports this region -,-
-        }
-      }
+          cloud: "aws",
+          region: "us-east-1", //free plan only supports this region -,-
+        },
+      },
     });
-    
+
     // Wait for index to be ready
     while (true) {
       const description = await pinecone.describeIndex(PINECONE_INDEX_NAME);
       if (description.status.ready) break;
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 
@@ -74,11 +73,11 @@ const ensureIndex = async (pinecone: Pinecone, dimension = 768) => { // 768 is d
 export const qaWithGemini = async (
   question: string,
   entries: Array<{ id: string; content: string }>,
-  namespace?: string
+  namespace?: string,
 ) => {
   try {
     const apiKey = await getApiKey();
-    
+
     // Initialize Gemini embeddings
     const embeddings = new GoogleGenerativeAIEmbeddings({
       apiKey,
@@ -90,25 +89,23 @@ export const qaWithGemini = async (
     const index = await ensureIndex(pinecone);
 
     // Initialize Pinecone store with verified index
-    const pineconeStore = await PineconeStore.fromExistingIndex(
-      embeddings,
-      {
-        pineconeIndex: index,
-        namespace,
-        textKey: "pageContent",
-      }
-    );
+    const pineconeStore = await PineconeStore.fromExistingIndex(embeddings, {
+      pineconeIndex: index,
+      namespace,
+      textKey: "pageContent",
+    });
 
     // Create documents with metadata
-    const documents = entries.map((entry) => 
-      new Document({
-        pageContent: entry.content,
-        metadata: {
-          id: entry.id,
-          date: new Date().toISOString(),
-          source: "journal",
-        },
-      })
+    const documents = entries.map(
+      (entry) =>
+        new Document({
+          pageContent: entry.content,
+          metadata: {
+            id: entry.id,
+            date: new Date().toISOString(),
+            source: "journal",
+          },
+        }),
     );
 
     // Batch process documents
@@ -129,7 +126,7 @@ export const qaWithGemini = async (
     if (relevantDocs.length === 0) {
       return {
         answer: "No relevant entries found for your question.",
-        relevantEntries: []
+        relevantEntries: [],
       };
     }
 
@@ -163,12 +160,11 @@ Please provide a clear and direct answer based only on the information present i
 
     return {
       answer: result.content,
-      relevantEntries: relevantDocs.map(doc => ({
+      relevantEntries: relevantDocs.map((doc) => ({
         id: doc.metadata.id,
-        date: doc.metadata.date
-      }))
+        date: doc.metadata.date,
+      })),
     };
-
   } catch (error) {
     console.error("Error in qaWithGemini:", error);
   }
