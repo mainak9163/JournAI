@@ -1,11 +1,11 @@
 "use client";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/tailwind/ui/alert";
+import { Button } from "@/components/tailwind/ui/button";
+import { Checkbox } from "@/components/tailwind/ui/checkbox";
 import { DialogTrigger } from "@/components/tailwind/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/tailwind/ui/dialog";
+import { Progress } from "@/components/tailwind/ui/progress";
 import Cookies from "js-cookie";
 import { HelpCircle, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";

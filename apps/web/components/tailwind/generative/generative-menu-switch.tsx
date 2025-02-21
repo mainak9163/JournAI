@@ -1,7 +1,5 @@
 import { EditorBubble, removeAIHighlight, useEditor } from "novel";
 import { Fragment, type ReactNode, useEffect } from "react";
-import Magic from "../../ui/icons/magic";
-import { Button } from "../ui/button";
 import { AISelector } from "./ai-selector";
 
 interface GenerativeMenuSwitchProps {
@@ -29,7 +27,7 @@ const GenerativeMenuSwitch = ({ children, open, onOpenChange }: GenerativeMenuSw
       {open && <AISelector open={open} onOpenChange={onOpenChange} />}
       {!open && (
         <Fragment>
-          <Button
+          {/* <Button
             className="gap-1 rounded-none text-purple-500 min-w-24"
             variant="ghost"
             onClick={() => onOpenChange(true)}
@@ -37,7 +35,7 @@ const GenerativeMenuSwitch = ({ children, open, onOpenChange }: GenerativeMenuSw
           >
             <Magic className="h-5 w-5" />
             Ask AI
-          </Button>
+          </Button> */}
           {children}
         </Fragment>
       )}
