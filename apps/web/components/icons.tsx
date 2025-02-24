@@ -48,16 +48,8 @@ export const Icons = {
       strokeLinecap="round"
       {...props}
     >
-      <path
-        className="opacity-0 transition group-hover:opacity-100"
-        d="M0 5h7"
-        strokeLinecap="round"
-      ></path>
-      <path
-        className="transition group-hover:translate-x-[3px]"
-        d="M1 1l4 4-4 4"
-        strokeLinecap="round"
-      ></path>
+      <path className="opacity-0 transition group-hover:opacity-100" d="M0 5h7" strokeLinecap="round"></path>
+      <path className="transition group-hover:translate-x-[3px]" d="M1 1l4 4-4 4" strokeLinecap="round"></path>
     </svg>
   ),
   trash: Trash,
@@ -74,13 +66,7 @@ export const Icons = {
   help: HelpCircle,
   pizza: Pizza,
   twitter: (props: IconProps) => (
-    <svg
-      {...props}
-      height="23"
-      viewBox="0 0 1200 1227"
-      width="23"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...props} height="23" viewBox="0 0 1200 1227" width="23" xmlns="http://www.w3.org/2000/svg">
       <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" />
     </svg>
   ),
@@ -91,6 +77,7 @@ export const Icons = {
   moon: Moon,
   laptop: Laptop,
   gitHub: (props: IconProps) => (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path
         fill="currentColor"
@@ -100,10 +87,7 @@ export const Icons = {
   ),
   radix: (props: IconProps) => (
     <svg viewBox="0 0 25 25" fill="none" {...props}>
-      <path
-        d="M12 25C7.58173 25 4 21.4183 4 17C4 12.5817 7.58173 9 12 9V25Z"
-        fill="currentcolor"
-      ></path>
+      <path d="M12 25C7.58173 25 4 21.4183 4 17C4 12.5817 7.58173 9 12 9V25Z" fill="currentcolor"></path>
       <path d="M12 0H4V8H12V0Z" fill="currentcolor"></path>
       <path
         d="M17 8C19.2091 8 21 6.20914 21 4C21 1.79086 19.2091 0 17 0C14.7909 0 13 1.79086 13 4C13 6.20914 14.7909 8 17 8Z"
@@ -188,14 +172,7 @@ export const Icons = {
     </svg>
   ),
   notion: (props: IconProps) => (
-    <svg
-      width="100"
-      height="100"
-      viewBox="0 0 100 100"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M6.017 4.313l55.333 -4.087c6.797 -0.583 8.543 -0.19 12.817 2.917l17.663 12.443c2.913 2.14 3.883 2.723 3.883 5.053v68.243c0 4.277 -1.553 6.807 -6.99 7.193L24.467 99.967c-4.08 0.193 -6.023 -0.39 -8.16 -3.113L3.3 79.94c-2.333 -3.113 -3.3 -5.443 -3.3 -8.167V11.113c0 -3.497 1.553 -6.413 6.017 -6.8z"
         fill="#fff"
@@ -232,10 +209,7 @@ export const Icons = {
         d="M100.487 14.8297C96.4797 14.8297 93.2136 15.434 90.6892 16.6429C88.3376 17.6963 86.3568 19.4321 85.0036 21.6249C83.7091 23.8321 82.8962 26.2883 82.6184 28.832L93.1602 30.3135C93.5415 28.0674 94.3042 26.4754 95.4482 25.5373C96.7486 24.5562 98.3511 24.0605 99.9783 24.136C102.118 24.136 103.67 24.7079 104.634 25.8519C105.59 26.9959 106.076 28.5803 106.076 30.6681V31.7091H95.9401C90.7807 31.7091 87.0742 32.8531 84.8206 35.1411C82.5669 37.429 81.442 40.4492 81.4458 44.2014C81.4458 48.0452 82.5707 50.9052 84.8206 52.7813C87.0704 54.6574 89.8999 55.5897 93.3089 55.5783C97.5379 55.5783 100.791 54.1235 103.067 51.214C104.412 49.426 105.372 47.3793 105.887 45.2024H106.27L107.723 54.7546H117.275V30.5651C117.275 25.5659 115.958 21.6936 113.323 18.948C110.688 16.2024 106.409 14.8297 100.487 14.8297ZM103.828 44.6475C102.312 45.9116 100.327 46.5408 97.8562 46.5408C95.8199 46.5408 94.4052 46.1843 93.6121 45.4712C93.2256 45.1338 92.9182 44.7155 92.7116 44.246C92.505 43.7764 92.4043 43.2671 92.4166 42.7543C92.3941 42.2706 92.4702 41.7874 92.6403 41.3341C92.8104 40.8808 93.071 40.4668 93.4062 40.1174C93.7687 39.7774 94.1964 39.5145 94.6633 39.3444C95.1303 39.1743 95.6269 39.1006 96.1231 39.1278H106.093V39.7856C106.113 40.7154 105.919 41.6374 105.527 42.4804C105.134 43.3234 104.553 44.0649 103.828 44.6475Z"
         fill="#201515"
       ></path>
-      <path
-        d="M175.035 15.7391H163.75V54.7833H175.035V15.7391Z"
-        fill="#201515"
-      ></path>
+      <path d="M175.035 15.7391H163.75V54.7833H175.035V15.7391Z" fill="#201515"></path>
       <path
         d="M241.666 15.7391C238.478 15.7391 235.965 16.864 234.127 19.1139C232.808 20.7307 231.805 23.1197 231.119 26.2809H230.787L229.311 15.7391H219.673V54.7775H230.959V34.7578C230.959 32.2335 231.55 30.2982 232.732 28.9521C233.914 27.606 236.095 26.933 239.275 26.933H243.559V15.7391H241.666Z"
         fill="#201515"
@@ -252,34 +226,19 @@ export const Icons = {
         d="M146.201 14.6695C142.357 14.6695 139.268 15.8764 136.935 18.2902C135.207 20.0786 133.939 22.7479 133.131 26.2981H132.771L131.295 15.7563H121.657V66H132.942V45.3054H133.354C133.698 46.6852 134.181 48.0267 134.795 49.3093C135.75 51.3986 137.316 53.1496 139.286 54.3314C141.328 55.446 143.629 56.0005 145.955 55.9387C150.68 55.9387 154.277 54.0988 156.748 50.419C159.219 46.7392 160.455 41.6046 160.455 35.0153C160.455 28.6509 159.259 23.6689 156.869 20.0691C154.478 16.4694 150.922 14.6695 146.201 14.6695ZM147.345 42.9602C146.029 44.8668 143.97 45.8201 141.167 45.8201C140.012 45.8735 138.86 45.6507 137.808 45.1703C136.755 44.6898 135.832 43.9656 135.116 43.0574C133.655 41.2233 132.927 38.7122 132.931 35.5243V34.7807C132.931 31.5432 133.659 29.0646 135.116 27.3448C136.572 25.625 138.59 24.7747 141.167 24.7937C144.02 24.7937 146.092 25.6994 147.385 27.5107C148.678 29.322 149.324 31.8483 149.324 35.0896C149.332 38.4414 148.676 41.065 147.356 42.9602H147.345Z"
         fill="#201515"
       ></path>
-      <path
-        d="M39.0441 45.2253H0V54.789H39.0441V45.2253Z"
-        fill="#FF4F00"
-      ></path>
+      <path d="M39.0441 45.2253H0V54.789H39.0441V45.2253Z" fill="#FF4F00"></path>
     </svg>
   ),
   googleDrive: (props: IconProps) => (
     <svg viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <path
-        d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z"
-        fill="#0066da"
-      />
-      <path
-        d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z"
-        fill="#00ac47"
-      />
+      <path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da" />
+      <path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47" />
       <path
         d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z"
         fill="#ea4335"
       />
-      <path
-        d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z"
-        fill="#00832d"
-      />
-      <path
-        d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z"
-        fill="#2684fc"
-      />
+      <path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d" />
+      <path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc" />
       <path
         d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z"
         fill="#ffba00"
@@ -287,15 +246,7 @@ export const Icons = {
     </svg>
   ),
   messenger: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      x="0px"
-      y="0px"
-      width="100"
-      height="100"
-      viewBox="0 0 48 48"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48" {...props}>
       <radialGradient
         id="8O3wK6b5ASW2Wn6hRCB5xa_YFbzdUk7Q3F8_gr1"
         cx="11.087"
@@ -331,31 +282,13 @@ export const Icons = {
     </svg>
   ),
   whatsapp: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 175.216 175.552"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175.216 175.552" {...props}>
       <defs>
-        <linearGradient
-          id="b"
-          x1="85.915"
-          x2="86.535"
-          y1="32.567"
-          y2="137.092"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="b" x1="85.915" x2="86.535" y1="32.567" y2="137.092" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#57d163" />
           <stop offset="1" stopColor="#23b33a" />
         </linearGradient>
-        <filter
-          id="a"
-          width="1.115"
-          height="1.114"
-          x="-.057"
-          y="-.057"
-          colorInterpolationFilters="sRGB"
-        >
+        <filter id="a" width="1.115" height="1.114" x="-.057" y="-.057" colorInterpolationFilters="sRGB">
           <feGaussianBlur stdDeviation="3.531" />
         </filter>
       </defs>
@@ -384,14 +317,7 @@ export const Icons = {
     </svg>
   ),
   googleDocs: (props: IconProps) => (
-    <svg
-      width="47px"
-      height="65px"
-      viewBox="0 0 47 65"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg width="47px" height="65px" viewBox="0 0 47 65" version="1.1" xmlns="http://www.w3.org/2000/svg" {...props}>
       <title>Docs-icon</title>
       <desc>Created with Sketch.</desc>
       <defs>
@@ -403,13 +329,7 @@ export const Icons = {
           d="M29.375,0 L4.40625,0 C1.9828125,0 0,1.99431818 0,4.43181818 L0,60.5681818 C0,63.0056818 1.9828125,65 4.40625,65 L42.59375,65 C45.0171875,65 47,63.0056818 47,60.5681818 L47,17.7272727 L29.375,0 Z"
           id="path-3"
         ></path>
-        <linearGradient
-          x1="50.0053945%"
-          y1="8.58610612%"
-          x2="50.0053945%"
-          y2="100.013939%"
-          id="linearGradient-5"
-        >
+        <linearGradient x1="50.0053945%" y1="8.58610612%" x2="50.0053945%" y2="100.013939%" id="linearGradient-5">
           <stop stopColor="#1A237E" stopOpacity="0.2" offset="0%"></stop>
           <stop stopColor="#1A237E" stopOpacity="0.02" offset="100%"></stop>
         </linearGradient>
@@ -446,17 +366,8 @@ export const Icons = {
           <stop stopColor="#FFFFFF" stopOpacity="0" offset="100%"></stop>
         </radialGradient>
       </defs>
-      <g
-        id="Page-1"
-        stroke="none"
-        strokeWidth="1"
-        fill="none"
-        fillRule="evenodd"
-      >
-        <g
-          id="Consumer-Apps-Docs-Large-VD-R8"
-          transform="translate(-451.000000, -463.000000)"
-        >
+      <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+        <g id="Consumer-Apps-Docs-Large-VD-R8" transform="translate(-451.000000, -463.000000)">
           <g id="Hero" transform="translate(0.000000, 63.000000)">
             <g id="Personal" transform="translate(277.000000, 309.000000)">
               <g id="Docs-icon" transform="translate(174.000000, 91.000000)">

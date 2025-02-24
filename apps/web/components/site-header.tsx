@@ -4,10 +4,10 @@ import Link from "next/link";
 import { Icons } from "@/components/icons";
 import { MainNav } from "@/components/main-nav";
 import { ModeToggle } from "@/components/mode-toggle";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/tailwind/ui/button";
+import NumberTicker from "@/components/tailwind/ui/number-ticker";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import NumberTicker from "./ui/number-ticker";
 
 export async function SiteHeader() {
   let stars = 0; // Default value

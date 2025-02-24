@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/tailwind/ui/badge";
+import { Card, CardContent, CardHeader } from "@/components/tailwind/ui/card";
 import { cn } from "@/lib/utils";
 
 interface SentimentJournalCardProps {

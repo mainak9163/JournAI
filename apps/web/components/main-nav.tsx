@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/tailwind/ui/badge";
 import { siteConfig } from "@/config/site";
 
 export function MainNav() {

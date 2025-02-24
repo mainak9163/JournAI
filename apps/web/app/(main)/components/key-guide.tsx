@@ -1,7 +1,7 @@
 import { Alert, AlertDescription } from "@/components/tailwind/ui/alert";
+import { Button } from "@/components/tailwind/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/tailwind/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/tailwind/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { AlertCircle, CheckCircle2, ExternalLink } from "lucide-react";
 import { useState } from "react";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/tailwind/ui/card";
 import { motion } from "framer-motion";
 import { PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";

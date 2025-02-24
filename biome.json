@@ -10,7 +10,8 @@
       ".turbo",
       "**/dist",
       "**/out",
-      ".next"
+      ".next",
+      "icons.tsx"
     ]
   },
   "organizeImports": {

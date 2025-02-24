@@ -1,8 +1,8 @@
 "use client";
 
 import TailwindAdvancedEditor from "@/components/tailwind/advanced-editor";
+import { Button } from "@/components/tailwind/ui/button";
 import { Input } from "@/components/tailwind/ui/input";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Loader2, SendHorizonal } from "lucide-react";
 import { useRouter } from "next/navigation";

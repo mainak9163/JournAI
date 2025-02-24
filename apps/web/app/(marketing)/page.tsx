@@ -1,6 +1,6 @@
 "use client";
-import AnimatedGradientText from "@/components/ui/animated-gradient-text";
-import { RainbowButton } from "@/components/ui/rainbow-button";
+import AnimatedGradientText from "@/components/tailwind/ui/animated-gradient-text";
+import { RainbowButton } from "@/components/tailwind/ui/rainbow-button";
 import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 import { redirect } from "next/navigation";

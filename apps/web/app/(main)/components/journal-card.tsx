@@ -15,7 +15,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import PersonalityAnalysis from "./personality-analysis";
 
-export function JournalCard({ journal }) {
+export function JournalCard({ journal, showShare = true }) {
   const [analysisOpen, setAnalysisOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState("");
@@ -74,7 +74,7 @@ export function JournalCard({ journal }) {
 
   const getMoodColor = () => {
     const alpha = 0.2; // For badge background
-    const hexToRgba = (hex) => {
+    const hexToRgba = (hex: string) => {
       const r = Number.parseInt(hex.slice(1, 3), 16);
       const g = Number.parseInt(hex.slice(3, 5), 16);
       const b = Number.parseInt(hex.slice(5, 7), 16);
@@ -114,18 +114,20 @@ export function JournalCard({ journal }) {
                 {journal.mood}
               </Badge>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setShareDialogOpen(true)}>
-                      <Share2 className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Share Journal</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              {showShare && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setShareDialogOpen(true)}>
+                        <Share2 className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Share Journal</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
             </div>
             <CardTitle className="line-clamp-1 leading-normal">{journal.subject}</CardTitle>
           </div>
