@@ -1,23 +1,23 @@
-import { ChatOpenAI } from "@langchain/openai";
-import { PineconeStore } from "@langchain/pinecone";
-import { OpenAIEmbeddings } from "@langchain/openai";
 import { Document } from "@langchain/core/documents";
-import { getPrompt } from "./prompt";
-import { pinecone } from "./pinecone-client";
+import { ChatOpenAI } from "@langchain/openai";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { PineconeStore } from "@langchain/pinecone";
 import { cookies } from "next/headers"; // Import cookies
+import { pinecone } from "./pinecone-client";
+import { getPrompt } from "./prompt";
 
-import { Pinecone } from "@pinecone-database/pinecone";
+import type { Pinecone } from "@pinecone-database/pinecone";
 
 const PINECONE_INDEX_NAME = "openai-indexing";
 // Get API key from cookies
 const getApiKey = async () => {
   const cookieStore = await cookies();
-  return cookieStore.get('apiKey')?.value;
+  return cookieStore.get("apiKey")?.value;
 };
 
 export const analyzeEntryWithOpenAI = async (entry: string) => {
-  const cookieStore =await cookies();
-  const apiKey =  cookieStore.get("apiKey")?.value;
+  const cookieStore = await cookies();
+  const apiKey = cookieStore.get("apiKey")?.value;
 
   if (!apiKey) {
     throw new Error("API key is missing in cookies.");
@@ -36,35 +36,33 @@ export const analyzeEntryWithOpenAI = async (entry: string) => {
     throw new Error("Failed to extract JSON from the output.");
   }
   const jsonObject = JSON.parse(jsonString[1]);
-  console.log(jsonObject)
+  console.log(jsonObject);
   return jsonObject;
 };
 
-
-const ensureIndex = async (pinecone: Pinecone, dimension = 1536) => { // 1536 for OpenAI embeddings
+const ensureIndex = async (pinecone: Pinecone, dimension = 1536) => {
+  // 1536 for OpenAI embeddings
   const existingIndexes = (await pinecone.listIndexes()).indexes;
-  const indexExists = existingIndexes?.some(
-    (    index: { name: string; }) => index.name === PINECONE_INDEX_NAME
-  );
+  const indexExists = existingIndexes?.some((index: { name: string }) => index.name === PINECONE_INDEX_NAME);
 
   if (!indexExists) {
     console.log(`Creating new index: ${PINECONE_INDEX_NAME}`);
     await pinecone.createIndex({
       name: PINECONE_INDEX_NAME,
       dimension: dimension,
-      metric: 'cosine',
+      metric: "cosine",
       spec: {
         serverless: {
-          cloud: 'aws',
-          region: 'us-east-1'
-        }
-      }
+          cloud: "aws",
+          region: "us-east-1",
+        },
+      },
     });
-    
+
     while (true) {
       const description = await pinecone.describeIndex(PINECONE_INDEX_NAME);
       if (description.status.ready) break;
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 
@@ -75,11 +73,11 @@ const ensureIndex = async (pinecone: Pinecone, dimension = 1536) => { // 1536 fo
 export const qaWithOpenAI = async (
   question: string,
   entries: Array<{ id: string; content: string }>,
-  namespace?: string
+  namespace?: string,
 ) => {
   try {
     const openAIKey = await getApiKey();
-    
+
     // Initialize OpenAI embeddings with the cheapest model
     const embeddings = new OpenAIEmbeddings({
       openAIApiKey: openAIKey,
@@ -89,25 +87,23 @@ export const qaWithOpenAI = async (
     });
 
     const index = await ensureIndex(pinecone, 1536);
-    
-    const pineconeStore = await PineconeStore.fromExistingIndex(
-      embeddings,
-      {
-        pineconeIndex: index,
-        namespace,
-        textKey: "pageContent",
-      }
-    );
 
-    const documents = entries.map((entry) => 
-      new Document({
-        pageContent: entry.content,
-        metadata: {
-          id: entry.id,
-          date: new Date().toISOString(),
-          source: "journal",
-        },
-      })
+    const pineconeStore = await PineconeStore.fromExistingIndex(embeddings, {
+      pineconeIndex: index,
+      namespace,
+      textKey: "pageContent",
+    });
+
+    const documents = entries.map(
+      (entry) =>
+        new Document({
+          pageContent: entry.content,
+          metadata: {
+            id: entry.id,
+            date: new Date().toISOString(),
+            source: "journal",
+          },
+        }),
     );
 
     // Batch process
@@ -122,7 +118,7 @@ export const qaWithOpenAI = async (
     if (relevantDocs.length === 0) {
       return {
         answer: "No relevant entries found for your question.",
-        relevantEntries: []
+        relevantEntries: [],
       };
     }
 
@@ -151,12 +147,11 @@ Provide a direct answer using only the information in the entries.`;
 
     return {
       answer: result.content,
-      relevantEntries: relevantDocs.map(doc => ({
+      relevantEntries: relevantDocs.map((doc) => ({
         id: doc.metadata.id,
-        date: doc.metadata.date
-      }))
+        date: doc.metadata.date,
+      })),
     };
-
   } catch (error) {
     console.error("Error in qaWithOpenAI:", error);
   }

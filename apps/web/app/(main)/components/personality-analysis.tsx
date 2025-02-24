@@ -1,6 +1,7 @@
 import { BookOpen, Brain, Briefcase, TrendingUp, UserCircle } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
+//@ts-expect-error analysis type needs to be added TODO
 const PersonalityAnalysis = ({ analysis }) => {
   // This would normally come from props or context
   //   const analysis = {
@@ -42,7 +43,7 @@ const PersonalityAnalysis = ({ analysis }) => {
   if (!analysis) return <></>;
 
   // Format date
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -146,7 +147,7 @@ const PersonalityAnalysis = ({ analysis }) => {
             <h2 className="text-xl font-semibold">Strengths</h2>
           </div>
           <ul className="space-y-2">
-            {analysis.strengths.map((strength, index) => (
+            {analysis.strengths.map((strength: string, index: number) => (
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               <li key={index} className="flex items-center">
                 <span className="h-2 w-2 bg-primary rounded-full mr-2" />
@@ -162,7 +163,7 @@ const PersonalityAnalysis = ({ analysis }) => {
             <h2 className="text-xl font-semibold">Growth Areas</h2>
           </div>
           <ul className="space-y-2">
-            {analysis.growthAreas.map((area, index) => (
+            {analysis.growthAreas.map((area: string, index: number) => (
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               <li key={index} className="flex items-center">
                 <span className="h-2 w-2 bg-primary rounded-full mr-2" />
@@ -180,7 +181,7 @@ const PersonalityAnalysis = ({ analysis }) => {
           <h2 className="text-xl font-semibold">Career Suggestions</h2>
         </div>
         <div className="flex flex-wrap gap-4">
-          {analysis.careerSuggestions.map((career, index) => (
+          {analysis.careerSuggestions.map((career: string, index: number) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             <div key={index} className="bg-accent text-accent-foreground p-2 px-4 rounded-md w-fit">
               <span>{career}</span>

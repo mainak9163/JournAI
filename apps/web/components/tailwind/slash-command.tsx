@@ -119,6 +119,7 @@ export const suggestionItems = createSuggestionItems([
         if (input.files?.length) {
           const file = input.files[0];
           const pos = editor.view.state.selection.from;
+          //@ts-expect-error File type issue
           uploadFn(file, editor.view, pos);
         }
       };
@@ -137,13 +138,13 @@ export const suggestionItems = createSuggestionItems([
         /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/,
       );
 
-      if (ytregex.test(videoLink)) {
+      if (ytregex.test(videoLink || "")) {
         editor
           .chain()
           .focus()
           .deleteRange(range)
           .setYoutubeVideo({
-            src: videoLink,
+            src: videoLink || "",
           })
           .run();
       } else {
@@ -162,13 +163,13 @@ export const suggestionItems = createSuggestionItems([
       const tweetLink = prompt("Please enter Twitter Link");
       const tweetRegex = new RegExp(/^https?:\/\/(www\.)?x\.com\/([a-zA-Z0-9_]{1,15})(\/status\/(\d+))?(\/\S*)?$/);
 
-      if (tweetRegex.test(tweetLink)) {
+      if (tweetRegex.test(tweetLink || "")) {
         editor
           .chain()
           .focus()
           .deleteRange(range)
           .setTweet({
-            src: tweetLink,
+            src: tweetLink || "",
           })
           .run();
       } else {

@@ -22,7 +22,11 @@ export async function GET() {
         sharedWithUserId: session.user.id,
       },
       include: {
-        journal: true,
+        journal: {
+          include: {
+            analysis: true,
+          },
+        },
         sharedByUser: {
           select: {
             email: true,

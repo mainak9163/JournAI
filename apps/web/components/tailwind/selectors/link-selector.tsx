@@ -11,6 +11,7 @@ export function isValidUrl(url: string) {
     new URL(url);
     return true;
   } catch (_e) {
+    console.error(_e);
     return false;
   }
 }
@@ -21,6 +22,7 @@ export function getUrlFromString(str: string) {
       return new URL(`https://${str}`).toString();
     }
   } catch (_e) {
+    console.error(_e);
     return null;
   }
 }
@@ -82,7 +84,9 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
               className="flex h-8 items-center rounded-sm p-1 text-red-600 transition-all hover:bg-red-100 dark:hover:bg-red-800"
               onClick={() => {
                 editor.chain().focus().unsetLink().run();
-                inputRef.current.value = "";
+                if (inputRef.current) {
+                  inputRef.current.value = "";
+                }
                 onOpenChange(false);
               }}
             >

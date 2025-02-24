@@ -8,7 +8,7 @@ import { useState } from "react";
 const APIKeyGuide = () => {
   const [activeTab, setActiveTab] = useState("gemini");
 
-  const openInNewTab = (url) => {
+  const openInNewTab = (url: string) => {
     window.open(url, "_blank", "noopener noreferrer");
   };
 

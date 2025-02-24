@@ -119,7 +119,7 @@ const SharedJournalsView = () => {
           <AccordionContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
               {group.journals.map((journal) => (
-                <JournalCard key={journal.id} journal={journal} showShare={false} />
+                <JournalCard key={journal.id} journal={journal} shared={true} />
               ))}
             </div>
           </AccordionContent>

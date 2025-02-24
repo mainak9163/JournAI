@@ -72,12 +72,12 @@ const SettingsPage = () => {
     }
   };
 
-  const handleModelChange = (value) => {
+  const handleModelChange = (value: string) => {
     setFormData((prev) => ({ ...prev, model: value }));
     if (errors.model) setErrors((prev) => ({ ...prev, model: "" }));
   };
 
-  const handleApiKeyChange = (e) => {
+  const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, apiKey: e.target.value }));
     if (errors.apiKey) setErrors((prev) => ({ ...prev, apiKey: "" }));
   };

@@ -1,64 +1,62 @@
 import { ChatAnthropic } from "@langchain/anthropic";
-import { PineconeEmbeddings, PineconeStore } from "@langchain/pinecone";
 import { Document } from "@langchain/core/documents";
-import { getPrompt } from "./prompt";
-import { pinecone } from "./pinecone-client";
+import { PineconeEmbeddings, PineconeStore } from "@langchain/pinecone";
+import type { Pinecone } from "@pinecone-database/pinecone";
 import { cookies } from "next/headers";
-import { Pinecone } from "@pinecone-database/pinecone";
+import { pinecone } from "./pinecone-client";
+import { getPrompt } from "./prompt";
 
 const PINECONE_INDEX_NAME = "anthropic-indexing";
 
 // Get API key from cookies
-const getApiKey =async () => {
- const cookieStore =await cookies();
- return cookieStore.get('apiKey')?.value;
+const getApiKey = async () => {
+  const cookieStore = await cookies();
+  return cookieStore.get("apiKey")?.value;
 };
 
 export const analyzeEntryWithAnthropic = async (entry: string) => {
- const apiKey =await getApiKey();
- 
- const model = new ChatAnthropic({
-   anthropicApiKey: apiKey,
-   modelName: "claude-3-sonnet-20240229", // One of the cheaper Claude models
-   temperature: 0,
- });
+  const apiKey = await getApiKey();
 
- const input = await getPrompt(entry);
- const output = await model.invoke(input);
+  const model = new ChatAnthropic({
+    anthropicApiKey: apiKey,
+    modelName: "claude-3-sonnet-20240229", // One of the cheaper Claude models
+    temperature: 0,
+  });
+
+  const input = await getPrompt(entry);
+  const output = await model.invoke(input);
   //@ts-expect-error output.content is a string which consists of the json but somehow does not understand that
   const jsonString = output.content.match(/```json\s*([\s\S]*?)\s*```/);
   if (!jsonString) {
     throw new Error("Failed to extract JSON from the output.");
   }
   const jsonObject = JSON.parse(jsonString[1]);
-  console.log(jsonObject)
+  console.log(jsonObject);
   return jsonObject;
 };
 
 const ensureIndex = async (pinecone: Pinecone, dimension = 1536) => {
   const existingIndexes = (await pinecone.listIndexes()).indexes;
-  const indexExists = existingIndexes?.some(
-    (    index: { name: string; }) => index.name === PINECONE_INDEX_NAME
-  );
+  const indexExists = existingIndexes?.some((index: { name: string }) => index.name === PINECONE_INDEX_NAME);
 
   if (!indexExists) {
     console.log(`Creating new index: ${PINECONE_INDEX_NAME}`);
     await pinecone.createIndex({
       name: PINECONE_INDEX_NAME,
       dimension: dimension,
-      metric: 'cosine',
+      metric: "cosine",
       spec: {
         serverless: {
-          cloud: 'aws',
-          region: 'us-east-1'
-        }
-      }
+          cloud: "aws",
+          region: "us-east-1",
+        },
+      },
     });
-    
+
     while (true) {
       const description = await pinecone.describeIndex(PINECONE_INDEX_NAME);
       if (description.status.ready) break;
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 
@@ -69,36 +67,34 @@ const ensureIndex = async (pinecone: Pinecone, dimension = 1536) => {
 export const qaWithAnthropic = async (
   question: string,
   entries: Array<{ id: string; content: string }>,
-  namespace?: string
+  namespace?: string,
 ) => {
   try {
     const anthropicKey = await getApiKey();
 
-       const embeddings = new PineconeEmbeddings({
-  model: "multilingual-e5-large",
-});
-    
-        // Ensure index exists before proceeding
-        const index = await ensureIndex(pinecone);
+    const embeddings = new PineconeEmbeddings({
+      model: "multilingual-e5-large",
+    });
 
-    const pineconeStore = await PineconeStore.fromExistingIndex(
-      embeddings,
-      {
-        pineconeIndex: index,
-        namespace,
-        textKey: "pageContent",
-      }
-    );
+    // Ensure index exists before proceeding
+    const index = await ensureIndex(pinecone);
 
-    const documents = entries.map((entry) => 
-      new Document({
-        pageContent: entry.content,
-        metadata: {
-          id: entry.id,
-          date: new Date().toISOString(),
-          source: "journal",
-        },
-      })
+    const pineconeStore = await PineconeStore.fromExistingIndex(embeddings, {
+      pineconeIndex: index,
+      namespace,
+      textKey: "pageContent",
+    });
+
+    const documents = entries.map(
+      (entry) =>
+        new Document({
+          pageContent: entry.content,
+          metadata: {
+            id: entry.id,
+            date: new Date().toISOString(),
+            source: "journal",
+          },
+        }),
     );
 
     // Batch process with smaller batch size due to API limits
@@ -113,7 +109,7 @@ export const qaWithAnthropic = async (
     if (relevantDocs.length === 0) {
       return {
         answer: "No relevant entries found for your question.",
-        relevantEntries: []
+        relevantEntries: [],
       };
     }
 
@@ -142,12 +138,11 @@ Provide a direct answer using only the information in the entries.`;
 
     return {
       answer: result.content,
-      relevantEntries: relevantDocs.map(doc => ({
+      relevantEntries: relevantDocs.map((doc) => ({
         id: doc.metadata.id,
-        date: doc.metadata.date
-      }))
+        date: doc.metadata.date,
+      })),
     };
-
   } catch (error) {
     console.error("Error in qaWithAnthropicDirect:", error);
   }

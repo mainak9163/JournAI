@@ -3,6 +3,8 @@
 
   "compilerOptions": {
     "strict": true,
+    "declaration": false,
+    "declarationMap": false,
     "plugins": [
       {
         "name": "next"

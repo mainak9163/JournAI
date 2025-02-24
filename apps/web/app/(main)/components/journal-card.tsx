@@ -15,7 +15,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import PersonalityAnalysis from "./personality-analysis";
 
-export function JournalCard({ journal, showShare = true }) {
+//@ts-expect-error journal with analysis type needs to be added TODO
+export function JournalCard({ journal, shared = false }) {
   const [analysisOpen, setAnalysisOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState("");
@@ -24,7 +25,11 @@ export function JournalCard({ journal, showShare = true }) {
 
   const handleAnalysisClick = () => {
     if (!journal.analysis) {
-      toast.error("Analysis not available. Go to analysis page to create one.", {
+      let errorMessage = "";
+      if (shared) errorMessage = "Analysis not available.";
+      else errorMessage = "Analysis not available. Go to analysis page to create one.";
+
+      toast.error(errorMessage, {
         action: {
           label: "Go to Analysis",
           onClick: () => router.push(`/analysis/${journal.id}`),
@@ -114,7 +119,7 @@ export function JournalCard({ journal, showShare = true }) {
                 {journal.mood}
               </Badge>
 
-              {showShare && (
+              {!shared && (
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
