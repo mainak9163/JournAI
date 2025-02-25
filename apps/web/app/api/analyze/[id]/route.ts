@@ -53,7 +53,7 @@ async function analyzeJournal(entryId: string, userId: string, content: string):
   };
 }
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
 
@@ -67,7 +67,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
     if (!session?.user || !session.user.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const journal = await prisma.journalEntry.findUnique({
-      where: { id: params.id, userId: session.user.id },
+      where: { id: (await params).id, userId: session.user.id },
       select: { content: true },
     });
 
@@ -75,14 +75,14 @@ export async function POST(req: Request, { params }: { params: { id: string } })
 
     // Check if analysis already exists
     const existingAnalysis = await prisma.entryAnalysis.findUnique({
-      where: { entryId: params.id },
+      where: { entryId: (await params).id },
     });
 
     if (existingAnalysis) {
       return NextResponse.json({ error: "Analysis already exists. Use PATCH to update." }, { status: 400 });
     }
 
-    const analysisData = await analyzeJournal(params.id, session.user.id, journal.content);
+    const analysisData = await analyzeJournal((await params).id, session.user.id, journal.content);
 
     const savedAnalysis = await prisma.entryAnalysis.create({ data: analysisData });
 
@@ -93,7 +93,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
   }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
     if (session?.user) {
@@ -105,7 +105,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     if (!session?.user || !session.user.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const journal = await prisma.journalEntry.findUnique({
-      where: { id: params.id, userId: session.user.id },
+      where: { id: (await params).id, userId: session.user.id },
       select: { content: true },
     });
 
@@ -113,17 +113,17 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 
     // Check if analysis exists
     const existingAnalysis = await prisma.entryAnalysis.findUnique({
-      where: { entryId: params.id },
+      where: { entryId: (await params).id },
     });
 
     if (!existingAnalysis) {
       return NextResponse.json({ error: "No previous analysis found. Use POST to create." }, { status: 400 });
     }
 
-    const analysisData = await analyzeJournal(params.id, session.user.id, journal.content);
+    const analysisData = await analyzeJournal((await params).id, session.user.id, journal.content);
 
     const updatedAnalysis = await prisma.entryAnalysis.update({
-      where: { entryId: params.id },
+      where: { entryId: (await params).id },
       data: analysisData,
     });
 
@@ -134,7 +134,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   }
 }
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
     if (session?.user) {
@@ -149,7 +149,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     }
 
     const analysis = await prisma.entryAnalysis.findUnique({
-      where: { entryId: params.id, userId: session.user.id },
+      where: { entryId: (await params).id, userId: session.user.id },
     });
 
     if (!analysis) {

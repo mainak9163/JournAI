@@ -11,7 +11,8 @@
       "**/dist",
       "**/out",
       ".next",
-      "icons.tsx"
+      "icons.tsx",
+      "prompt.ts"
     ]
   },
   "organizeImports": {

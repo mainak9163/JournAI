@@ -5,7 +5,7 @@
     "changeset": "changeset",
     "publish:packages": "changeset publish",
     "version:packages": "turbo build && changeset version",
-    "build": "turbo build",
+    "build": "turbo run db:generate && turbo build",
     "dev": "turbo dev",
     "format": "turbo format --continue --",
     "format:fix": "turbo format --continue -- --write",
@@ -14,7 +14,8 @@
     "clean": "turbo clean",
     "release": "turbo run release",
     "prepare": "husky install",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "generate": "turbo run db:generate"
   },
   "dependencies": {
     "@changesets/changelog-github": "^0.5.0",

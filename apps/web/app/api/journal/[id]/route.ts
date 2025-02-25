@@ -3,7 +3,7 @@ import { getUserIdByEmail } from "@/utils/fetch-user";
 import { prisma } from "@repo/db";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
     if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -16,7 +16,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     }
 
     const journal = await prisma.journalEntry.findUnique({
-      where: { id: params.id, userId: session.user.id },
+      where: { id: (await params).id, userId: session.user.id },
     });
 
     if (!journal) return NextResponse.json({ error: "Journal not found" }, { status: 404 });
@@ -28,7 +28,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
 
@@ -55,7 +55,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
     if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -68,7 +68,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     }
 
     await prisma.journalEntry.delete({
-      where: { id: params.id, userId: session.user.id },
+      where: { id: (await params).id, userId: session.user.id },
     });
 
     return NextResponse.json({ message: "Journal deleted" }, { status: 200 });

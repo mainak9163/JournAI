@@ -69,9 +69,6 @@ importers:
       '@pinecone-database/pinecone':
         specifier: ^4.1.0
         version: 4.1.0
-      '@prisma/client':
-        specifier: ^6.2.1
-        version: 6.2.1(prisma@6.3.1(typescript@5.7.3))
       '@radix-ui/react-accordion':
         specifier: ^1.2.2
         version: 1.2.3(@types/react-dom@18.2.19)(@types/react@18.3.18)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -165,6 +162,9 @@ importers:
       install:
         specifier: ^0.13.0
         version: 0.13.0
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
       langchain:
         specifier: ^0.3.13
         version: 0.3.15(@langchain/anthropic@0.3.13(@langchain/core@0.3.38(openai@4.78.1(zod@3.24.1))))(@langchain/core@0.3.38(openai@4.78.1(zod@3.24.1)))(@langchain/google-genai@0.1.8(@langchain/core@0.3.38(openai@4.78.1(zod@3.24.1)))(zod@3.24.1))(openai@4.78.1(zod@3.24.1))
@@ -3294,6 +3294,10 @@ packages:
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
     engines: {node: '>=10'}
+
+  js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
 
   js-tiktoken@1.0.18:
     resolution: {integrity: sha512-hFYx4xYf6URgcttcGvGuOBJhTxPYZ2R5eIesqCaNRJmYH8sNmsfTeWg4yu//7u1VD/qIUkgKJTpGom9oHXmB4g==}
@@ -7545,6 +7549,8 @@ snapshots:
       react: 19.0.0
 
   joycon@3.1.1: {}
+
+  js-cookie@3.0.5: {}
 
   js-tiktoken@1.0.18:
     dependencies:

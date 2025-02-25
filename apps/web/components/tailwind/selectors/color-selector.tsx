@@ -124,7 +124,6 @@ export const ColorSelector = ({ open, onOpenChange }: ColorSelectorProps) => {
         <div className="flex flex-col">
           <div className="my-1 px-2 text-sm font-semibold text-muted-foreground">Color</div>
           {TEXT_COLORS.map(({ name, color }) => (
-            //@ts-expect-error EditorBubbleItem type error
             <EditorBubbleItem
               key={name}
               onSelect={() => {
@@ -152,7 +151,6 @@ export const ColorSelector = ({ open, onOpenChange }: ColorSelectorProps) => {
         <div>
           <div className="my-1 px-2 text-sm font-semibold text-muted-foreground">Background</div>
           {HIGHLIGHT_COLORS.map(({ name, color }) => (
-            //@ts-expect-error EditorBubbleItem type error
             <EditorBubbleItem
               key={name}
               onSelect={() => {

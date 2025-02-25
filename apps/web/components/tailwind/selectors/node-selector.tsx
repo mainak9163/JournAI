@@ -104,7 +104,6 @@ export const NodeSelector = ({ open, onOpenChange }: NodeSelectorProps) => {
       </PopoverTrigger>
       <PopoverContent sideOffset={5} align="start" className="w-48 p-1">
         {items.map((item) => (
-          //@ts-expect-error editor buble item
           <EditorBubbleItem
             key={item.name}
             onSelect={(editor) => {

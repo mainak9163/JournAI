@@ -42,7 +42,6 @@ export const TextButtons = () => {
   return (
     <div className="flex">
       {items.map((item) => (
-        //@ts-expect-error editor bubble types not there
         <EditorBubbleItem
           key={item.name}
           onSelect={(editor) => {

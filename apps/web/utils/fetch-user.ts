@@ -1,16 +1,16 @@
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "@repo/db";
 
 async function getUserIdByEmail(email: string): Promise<string | undefined> {
-    const user = await prisma.user.findUnique({
-        where: {
-            email: email,
-        },
-        select: {
-            id: true,
-        },
-    });
+  const user = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+    select: {
+      id: true,
+    },
+  });
 
-    return user ? user.id : undefined;
+  return user ? user.id : undefined;
 }
 
 export { getUserIdByEmail };

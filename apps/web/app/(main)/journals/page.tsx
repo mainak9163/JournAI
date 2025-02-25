@@ -28,8 +28,11 @@ export default function JournalsPage() {
     }
   };
 
-  const filteredJournals = journals.filter((journal) =>
-    journal.subject.toLowerCase().includes(searchTerm.toLowerCase()),
+  const filteredJournals = journals?.filter((journal) =>
+    //@ts-expect-error journal type needs to be made TODO
+    journal.subject
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -61,6 +64,7 @@ export default function JournalsPage() {
           <NewJournalCard />
           <AnimatePresence mode="popLayout">
             {filteredJournals.map((journal) => (
+              //@ts-expect-error journal type needs to be made TODO
               <JournalCard key={journal.id} journal={journal} />
             ))}
           </AnimatePresence>

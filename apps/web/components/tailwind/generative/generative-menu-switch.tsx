@@ -14,7 +14,6 @@ const GenerativeMenuSwitch = ({ children, open, onOpenChange }: GenerativeMenuSw
     if (!open && editor) removeAIHighlight(editor);
   }, [open]);
   return (
-    //@ts-expect-error EditorBubble type error
     <EditorBubble
       tippyOptions={{
         placement: open ? "bottom-start" : "top",
