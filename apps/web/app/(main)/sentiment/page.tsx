@@ -58,7 +58,7 @@ export default function SentimentPage() {
   const fetchJournals = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/api/journal");
+      const response = await fetch("https://journ-novel.vercel.app/api/journal");
 
       if (!response.ok) {
         throw new Error("Failed to fetch journals");
@@ -93,7 +93,7 @@ export default function SentimentPage() {
 
       try {
         const method = journal?.analysis ? "PATCH" : "POST";
-        const response = await fetch(`http://localhost:3000/api/analyze/${journalId}`, {
+        const response = await fetch(`https://journ-novel.vercel.app/api/analyze/${journalId}`, {
           method,
         });
 

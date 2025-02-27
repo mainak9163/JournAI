@@ -203,7 +203,9 @@ exports.Prisma.JournalShareScalarFieldEnum = {
   createdAt: 'createdAt',
   journalId: 'journalId',
   sharedByUserId: 'sharedByUserId',
-  sharedWithUserId: 'sharedWithUserId'
+  sharedWithUserId: 'sharedWithUserId',
+  allowEdit: 'allowEdit',
+  allowViewAnalysis: 'allowViewAnalysis'
 };
 
 exports.Prisma.SortOrder = {

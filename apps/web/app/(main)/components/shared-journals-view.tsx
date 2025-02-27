@@ -16,7 +16,11 @@ interface Analysis {
   growthAreas: string[];
   careerSuggestions: string[];
 }
-
+interface JournalWithPermissions {
+  allowEdit: boolean;
+  allowViewAnalysis: boolean;
+  journal: Journal;
+}
 interface Journal {
   id: string;
   subject: string;
@@ -30,11 +34,13 @@ interface Journal {
 interface SharedJournal {
   sharedBy: string;
   journal: Journal;
+  allowEdit: boolean;
+  allowViewAnalysis: boolean;
 }
 
 interface GroupedJournals {
   sharedBy: string;
-  journals: Journal[];
+  journals: JournalWithPermissions[];
 }
 
 const SharedJournalsView = () => {
@@ -54,11 +60,17 @@ const SharedJournalsView = () => {
         const grouped = journals.reduce<GroupedJournals[]>((acc: GroupedJournals[], curr: SharedJournal) => {
           const existingGroup = acc.find((g) => g.sharedBy === curr.sharedBy);
           if (existingGroup) {
-            existingGroup.journals.push(curr.journal);
+            existingGroup.journals.push({
+              journal: curr.journal,
+              allowEdit: curr.allowEdit,
+              allowViewAnalysis: curr.allowViewAnalysis,
+            });
           } else {
             acc.push({
               sharedBy: curr.sharedBy,
-              journals: [curr.journal],
+              journals: [
+                { journal: curr.journal, allowEdit: curr.allowEdit, allowViewAnalysis: curr.allowViewAnalysis },
+              ],
             });
           }
           return acc;
@@ -118,8 +130,14 @@ const SharedJournalsView = () => {
           </AccordionTrigger>
           <AccordionContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-              {group.journals.map((journal) => (
-                <JournalCard key={journal.id} journal={journal} shared={true} />
+              {group.journals.map((journ) => (
+                <JournalCard
+                  key={journ.journal.id}
+                  journal={journ.journal}
+                  shared={true}
+                  allowEdit={journ.allowEdit}
+                  allowViewAnalysis={journ.allowViewAnalysis}
+                />
               ))}
             </div>
           </AccordionContent>

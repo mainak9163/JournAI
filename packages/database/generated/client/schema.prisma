@@ -150,6 +150,9 @@ model JournalShare {
   sharedWithUserId String
   sharedWithUser   User   @relation(fields: [sharedWithUserId], references: [id], onDelete: Cascade, name: "SharedWithUserRelation")
 
+  allowEdit         Boolean @default(true)
+  allowViewAnalysis Boolean @default(true)
+
   @@unique([journalId, sharedWithUserId]) // Prevents duplicate sharing with the same user
   @@index([journalId, sharedByUserId]) // Ensures valid journal-user relationship
 }

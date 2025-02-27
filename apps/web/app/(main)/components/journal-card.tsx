@@ -3,6 +3,7 @@
 import { Badge } from "@/components/tailwind/ui/badge";
 import { Button } from "@/components/tailwind/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/tailwind/ui/card";
+import { Checkbox } from "@/components/tailwind/ui/checkbox";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/tailwind/ui/dialog";
 import { Input } from "@/components/tailwind/ui/input";
 import { Label } from "@/components/tailwind/ui/label";
@@ -16,29 +17,30 @@ import { toast } from "sonner";
 import PersonalityAnalysis from "./personality-analysis";
 
 //@ts-expect-error journal with analysis type needs to be added TODO
-export function JournalCard({ journal, shared = false }) {
+export function JournalCard({ journal, shared = false, allowEdit = true, allowViewAnalysis = true }) {
   const [analysisOpen, setAnalysisOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState("");
+  const [shareAllowEdit, setShareAllowEdit] = useState(true);
+  const [shareAllowViewAnalysis, setShareAllowViewAnalysis] = useState(true);
   const [isSharing, setIsSharing] = useState(false);
   const router = useRouter();
 
   const handleAnalysisClick = () => {
+    if (!allowViewAnalysis) {
+      toast.error("You are not allowed to view analysis for this journal");
+      return;
+    }
+
     if (!journal.analysis) {
       let errorMessage = "";
       if (shared) errorMessage = "Analysis not available.";
       else errorMessage = "Analysis not available. Go to analysis page to create one.";
 
-      toast.error(errorMessage, {
-        action: {
-          label: "Go to Analysis",
-          onClick: () => router.push(`/analysis/${journal.id}`),
-        },
-      });
+      toast.error(errorMessage);
       return;
     }
     setAnalysisOpen(true);
-    // router.push(`/analysis/${journal.analysis.id}`);
   };
 
   const handleShareJournal = async () => {
@@ -58,6 +60,8 @@ export function JournalCard({ journal, shared = false }) {
         body: JSON.stringify({
           journalId: journal.id,
           recipientEmail,
+          allowEdit: shareAllowEdit,
+          allowViewAnalysis: shareAllowViewAnalysis,
         }),
       });
 
@@ -65,6 +69,9 @@ export function JournalCard({ journal, shared = false }) {
         toast.success(`Journal successfully shared with ${recipientEmail}`);
         setShareDialogOpen(false);
         setRecipientEmail("");
+        // Reset the permissions to default for next share
+        setShareAllowEdit(true);
+        setShareAllowViewAnalysis(true);
       } else {
         const error = await response.json();
         toast.error(error.message || "Failed to share journal");
@@ -145,7 +152,17 @@ export function JournalCard({ journal, shared = false }) {
           </div>
 
           <div className="flex gap-2 w-full">
-            <Button variant="outline" className="flex-1" onClick={() => router.push(`/editor?entryId=${journal.id}`)}>
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => {
+                if (!allowEdit) {
+                  toast.error("You are not allowed to edit this journal");
+                  return;
+                }
+                router.push(`/editor?entryId=${journal.id}`);
+              }}
+            >
               <PencilIcon className="w-4 h-4 mr-2" />
               Edit
             </Button>
@@ -182,6 +199,30 @@ export function JournalCard({ journal, shared = false }) {
                 value={recipientEmail}
                 onChange={(e) => setRecipientEmail(e.target.value)}
               />
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="allowEdit"
+                  checked={shareAllowEdit}
+                  onCheckedChange={(checked) => setShareAllowEdit(checked === true)}
+                />
+                <Label htmlFor="allowEdit" className="cursor-pointer">
+                  Allow recipient to edit
+                </Label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="allowViewAnalysis"
+                  checked={shareAllowViewAnalysis}
+                  onCheckedChange={(checked) => setShareAllowViewAnalysis(checked === true)}
+                />
+                <Label htmlFor="allowViewAnalysis" className="cursor-pointer">
+                  Allow recipient to view analysis
+                </Label>
+              </div>
             </div>
           </div>
           <DialogFooter>

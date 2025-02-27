@@ -39,6 +39,8 @@ export async function GET() {
     const formattedJournals = sharedJournals.map((share) => ({
       journal: share.journal,
       sharedBy: share.sharedByUser.email,
+      allowEdit: share.allowEdit,
+      allowViewAnalysis: share.allowViewAnalysis,
     }));
 
     return NextResponse.json(formattedJournals, { status: 200 });

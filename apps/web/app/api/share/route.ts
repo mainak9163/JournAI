@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     }
     if (!session?.user || !session.user.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { journalId, recipientEmail } = await req.json();
+    const { journalId, recipientEmail, allowEdit, allowViewAnalysis } = await req.json();
     if (!journalId || !recipientEmail) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
     // Check if the journal exists and belongs to the current user
@@ -45,6 +45,8 @@ export async function POST(req: Request) {
         journalId,
         sharedByUserId: session.user.id,
         sharedWithUserId: recipient.id,
+        allowEdit,
+        allowViewAnalysis,
       },
     });
 

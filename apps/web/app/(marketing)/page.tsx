@@ -24,7 +24,7 @@ export default function Landing() {
           className={cn(
             "text-black dark:text-white text-center",
             "relative mx-0 max-w-[43.5rem]  pt-5  md:mx-auto md:px-4 md:py-2",
-            "text-balance text-left font-semibold tracking-tighter md:text-center",
+            "text-balance font-semibold tracking-tighter",
             "text-5xl sm:text-7xl md:text-7xl lg:text-7xl",
           )}
         >

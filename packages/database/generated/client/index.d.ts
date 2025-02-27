@@ -9604,6 +9604,8 @@ export namespace Prisma {
     journalId: string | null
     sharedByUserId: string | null
     sharedWithUserId: string | null
+    allowEdit: boolean | null
+    allowViewAnalysis: boolean | null
   }
 
   export type JournalShareMaxAggregateOutputType = {
@@ -9612,6 +9614,8 @@ export namespace Prisma {
     journalId: string | null
     sharedByUserId: string | null
     sharedWithUserId: string | null
+    allowEdit: boolean | null
+    allowViewAnalysis: boolean | null
   }
 
   export type JournalShareCountAggregateOutputType = {
@@ -9620,6 +9624,8 @@ export namespace Prisma {
     journalId: number
     sharedByUserId: number
     sharedWithUserId: number
+    allowEdit: number
+    allowViewAnalysis: number
     _all: number
   }
 
@@ -9630,6 +9636,8 @@ export namespace Prisma {
     journalId?: true
     sharedByUserId?: true
     sharedWithUserId?: true
+    allowEdit?: true
+    allowViewAnalysis?: true
   }
 
   export type JournalShareMaxAggregateInputType = {
@@ -9638,6 +9646,8 @@ export namespace Prisma {
     journalId?: true
     sharedByUserId?: true
     sharedWithUserId?: true
+    allowEdit?: true
+    allowViewAnalysis?: true
   }
 
   export type JournalShareCountAggregateInputType = {
@@ -9646,6 +9656,8 @@ export namespace Prisma {
     journalId?: true
     sharedByUserId?: true
     sharedWithUserId?: true
+    allowEdit?: true
+    allowViewAnalysis?: true
     _all?: true
   }
 
@@ -9727,6 +9739,8 @@ export namespace Prisma {
     journalId: string
     sharedByUserId: string
     sharedWithUserId: string
+    allowEdit: boolean
+    allowViewAnalysis: boolean
     _count: JournalShareCountAggregateOutputType | null
     _min: JournalShareMinAggregateOutputType | null
     _max: JournalShareMaxAggregateOutputType | null
@@ -9752,6 +9766,8 @@ export namespace Prisma {
     journalId?: boolean
     sharedByUserId?: boolean
     sharedWithUserId?: boolean
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
     journal?: boolean | JournalEntryDefaultArgs<ExtArgs>
     sharedByUser?: boolean | UserDefaultArgs<ExtArgs>
     sharedWithUser?: boolean | UserDefaultArgs<ExtArgs>
@@ -9763,6 +9779,8 @@ export namespace Prisma {
     journalId?: boolean
     sharedByUserId?: boolean
     sharedWithUserId?: boolean
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
     journal?: boolean | JournalEntryDefaultArgs<ExtArgs>
     sharedByUser?: boolean | UserDefaultArgs<ExtArgs>
     sharedWithUser?: boolean | UserDefaultArgs<ExtArgs>
@@ -9774,6 +9792,8 @@ export namespace Prisma {
     journalId?: boolean
     sharedByUserId?: boolean
     sharedWithUserId?: boolean
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
     journal?: boolean | JournalEntryDefaultArgs<ExtArgs>
     sharedByUser?: boolean | UserDefaultArgs<ExtArgs>
     sharedWithUser?: boolean | UserDefaultArgs<ExtArgs>
@@ -9785,9 +9805,11 @@ export namespace Prisma {
     journalId?: boolean
     sharedByUserId?: boolean
     sharedWithUserId?: boolean
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
   }
 
-  export type JournalShareOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "journalId" | "sharedByUserId" | "sharedWithUserId", ExtArgs["result"]["journalShare"]>
+  export type JournalShareOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "journalId" | "sharedByUserId" | "sharedWithUserId" | "allowEdit" | "allowViewAnalysis", ExtArgs["result"]["journalShare"]>
   export type JournalShareInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     journal?: boolean | JournalEntryDefaultArgs<ExtArgs>
     sharedByUser?: boolean | UserDefaultArgs<ExtArgs>
@@ -9817,6 +9839,8 @@ export namespace Prisma {
       journalId: string
       sharedByUserId: string
       sharedWithUserId: string
+      allowEdit: boolean
+      allowViewAnalysis: boolean
     }, ExtArgs["result"]["journalShare"]>
     composites: {}
   }
@@ -10248,6 +10272,8 @@ export namespace Prisma {
     readonly journalId: FieldRef<"JournalShare", 'String'>
     readonly sharedByUserId: FieldRef<"JournalShare", 'String'>
     readonly sharedWithUserId: FieldRef<"JournalShare", 'String'>
+    readonly allowEdit: FieldRef<"JournalShare", 'Boolean'>
+    readonly allowViewAnalysis: FieldRef<"JournalShare", 'Boolean'>
   }
     
 
@@ -10774,7 +10800,9 @@ export namespace Prisma {
     createdAt: 'createdAt',
     journalId: 'journalId',
     sharedByUserId: 'sharedByUserId',
-    sharedWithUserId: 'sharedWithUserId'
+    sharedWithUserId: 'sharedWithUserId',
+    allowEdit: 'allowEdit',
+    allowViewAnalysis: 'allowViewAnalysis'
   };
 
   export type JournalShareScalarFieldEnum = (typeof JournalShareScalarFieldEnum)[keyof typeof JournalShareScalarFieldEnum]
@@ -11441,6 +11469,8 @@ export namespace Prisma {
     journalId?: StringFilter<"JournalShare"> | string
     sharedByUserId?: StringFilter<"JournalShare"> | string
     sharedWithUserId?: StringFilter<"JournalShare"> | string
+    allowEdit?: BoolFilter<"JournalShare"> | boolean
+    allowViewAnalysis?: BoolFilter<"JournalShare"> | boolean
     journal?: XOR<JournalEntryScalarRelationFilter, JournalEntryWhereInput>
     sharedByUser?: XOR<UserScalarRelationFilter, UserWhereInput>
     sharedWithUser?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -11452,6 +11482,8 @@ export namespace Prisma {
     journalId?: SortOrder
     sharedByUserId?: SortOrder
     sharedWithUserId?: SortOrder
+    allowEdit?: SortOrder
+    allowViewAnalysis?: SortOrder
     journal?: JournalEntryOrderByWithRelationInput
     sharedByUser?: UserOrderByWithRelationInput
     sharedWithUser?: UserOrderByWithRelationInput
@@ -11467,6 +11499,8 @@ export namespace Prisma {
     journalId?: StringFilter<"JournalShare"> | string
     sharedByUserId?: StringFilter<"JournalShare"> | string
     sharedWithUserId?: StringFilter<"JournalShare"> | string
+    allowEdit?: BoolFilter<"JournalShare"> | boolean
+    allowViewAnalysis?: BoolFilter<"JournalShare"> | boolean
     journal?: XOR<JournalEntryScalarRelationFilter, JournalEntryWhereInput>
     sharedByUser?: XOR<UserScalarRelationFilter, UserWhereInput>
     sharedWithUser?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -11478,6 +11512,8 @@ export namespace Prisma {
     journalId?: SortOrder
     sharedByUserId?: SortOrder
     sharedWithUserId?: SortOrder
+    allowEdit?: SortOrder
+    allowViewAnalysis?: SortOrder
     _count?: JournalShareCountOrderByAggregateInput
     _max?: JournalShareMaxOrderByAggregateInput
     _min?: JournalShareMinOrderByAggregateInput
@@ -11492,6 +11528,8 @@ export namespace Prisma {
     journalId?: StringWithAggregatesFilter<"JournalShare"> | string
     sharedByUserId?: StringWithAggregatesFilter<"JournalShare"> | string
     sharedWithUserId?: StringWithAggregatesFilter<"JournalShare"> | string
+    allowEdit?: BoolWithAggregatesFilter<"JournalShare"> | boolean
+    allowViewAnalysis?: BoolWithAggregatesFilter<"JournalShare"> | boolean
   }
 
   export type UserCreateInput = {
@@ -12094,6 +12132,8 @@ export namespace Prisma {
   export type JournalShareCreateInput = {
     id?: string
     createdAt?: Date | string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
     journal: JournalEntryCreateNestedOneWithoutSharesInput
     sharedByUser: UserCreateNestedOneWithoutJournalSharesInput
     sharedWithUser: UserCreateNestedOneWithoutSharedWithMeInput
@@ -12105,11 +12145,15 @@ export namespace Prisma {
     journalId: string
     sharedByUserId: string
     sharedWithUserId: string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
   }
 
   export type JournalShareUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
     journal?: JournalEntryUpdateOneRequiredWithoutSharesNestedInput
     sharedByUser?: UserUpdateOneRequiredWithoutJournalSharesNestedInput
     sharedWithUser?: UserUpdateOneRequiredWithoutSharedWithMeNestedInput
@@ -12121,6 +12165,8 @@ export namespace Prisma {
     journalId?: StringFieldUpdateOperationsInput | string
     sharedByUserId?: StringFieldUpdateOperationsInput | string
     sharedWithUserId?: StringFieldUpdateOperationsInput | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type JournalShareCreateManyInput = {
@@ -12129,11 +12175,15 @@ export namespace Prisma {
     journalId: string
     sharedByUserId: string
     sharedWithUserId: string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
   }
 
   export type JournalShareUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type JournalShareUncheckedUpdateManyInput = {
@@ -12142,6 +12192,8 @@ export namespace Prisma {
     journalId?: StringFieldUpdateOperationsInput | string
     sharedByUserId?: StringFieldUpdateOperationsInput | string
     sharedWithUserId?: StringFieldUpdateOperationsInput | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -12727,6 +12779,8 @@ export namespace Prisma {
     journalId?: SortOrder
     sharedByUserId?: SortOrder
     sharedWithUserId?: SortOrder
+    allowEdit?: SortOrder
+    allowViewAnalysis?: SortOrder
   }
 
   export type JournalShareMaxOrderByAggregateInput = {
@@ -12735,6 +12789,8 @@ export namespace Prisma {
     journalId?: SortOrder
     sharedByUserId?: SortOrder
     sharedWithUserId?: SortOrder
+    allowEdit?: SortOrder
+    allowViewAnalysis?: SortOrder
   }
 
   export type JournalShareMinOrderByAggregateInput = {
@@ -12743,6 +12799,8 @@ export namespace Prisma {
     journalId?: SortOrder
     sharedByUserId?: SortOrder
     sharedWithUserId?: SortOrder
+    allowEdit?: SortOrder
+    allowViewAnalysis?: SortOrder
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -13657,6 +13715,8 @@ export namespace Prisma {
   export type JournalShareCreateWithoutSharedByUserInput = {
     id?: string
     createdAt?: Date | string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
     journal: JournalEntryCreateNestedOneWithoutSharesInput
     sharedWithUser: UserCreateNestedOneWithoutSharedWithMeInput
   }
@@ -13666,6 +13726,8 @@ export namespace Prisma {
     createdAt?: Date | string
     journalId: string
     sharedWithUserId: string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
   }
 
   export type JournalShareCreateOrConnectWithoutSharedByUserInput = {
@@ -13681,6 +13743,8 @@ export namespace Prisma {
   export type JournalShareCreateWithoutSharedWithUserInput = {
     id?: string
     createdAt?: Date | string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
     journal: JournalEntryCreateNestedOneWithoutSharesInput
     sharedByUser: UserCreateNestedOneWithoutJournalSharesInput
   }
@@ -13690,6 +13754,8 @@ export namespace Prisma {
     createdAt?: Date | string
     journalId: string
     sharedByUserId: string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
   }
 
   export type JournalShareCreateOrConnectWithoutSharedWithUserInput = {
@@ -13894,6 +13960,8 @@ export namespace Prisma {
     journalId?: StringFilter<"JournalShare"> | string
     sharedByUserId?: StringFilter<"JournalShare"> | string
     sharedWithUserId?: StringFilter<"JournalShare"> | string
+    allowEdit?: BoolFilter<"JournalShare"> | boolean
+    allowViewAnalysis?: BoolFilter<"JournalShare"> | boolean
   }
 
   export type JournalShareUpsertWithWhereUniqueWithoutSharedWithUserInput = {
@@ -14268,6 +14336,8 @@ export namespace Prisma {
   export type JournalShareCreateWithoutJournalInput = {
     id?: string
     createdAt?: Date | string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
     sharedByUser: UserCreateNestedOneWithoutJournalSharesInput
     sharedWithUser: UserCreateNestedOneWithoutSharedWithMeInput
   }
@@ -14277,6 +14347,8 @@ export namespace Prisma {
     createdAt?: Date | string
     sharedByUserId: string
     sharedWithUserId: string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
   }
 
   export type JournalShareCreateOrConnectWithoutJournalInput = {
@@ -14817,6 +14889,8 @@ export namespace Prisma {
     createdAt?: Date | string
     journalId: string
     sharedWithUserId: string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
   }
 
   export type JournalShareCreateManySharedWithUserInput = {
@@ -14824,6 +14898,8 @@ export namespace Prisma {
     createdAt?: Date | string
     journalId: string
     sharedByUserId: string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
   }
 
   export type EntryAnalysisCreateManyUserInput = {
@@ -14979,6 +15055,8 @@ export namespace Prisma {
   export type JournalShareUpdateWithoutSharedByUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
     journal?: JournalEntryUpdateOneRequiredWithoutSharesNestedInput
     sharedWithUser?: UserUpdateOneRequiredWithoutSharedWithMeNestedInput
   }
@@ -14988,6 +15066,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     journalId?: StringFieldUpdateOperationsInput | string
     sharedWithUserId?: StringFieldUpdateOperationsInput | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type JournalShareUncheckedUpdateManyWithoutSharedByUserInput = {
@@ -14995,11 +15075,15 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     journalId?: StringFieldUpdateOperationsInput | string
     sharedWithUserId?: StringFieldUpdateOperationsInput | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type JournalShareUpdateWithoutSharedWithUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
     journal?: JournalEntryUpdateOneRequiredWithoutSharesNestedInput
     sharedByUser?: UserUpdateOneRequiredWithoutJournalSharesNestedInput
   }
@@ -15009,6 +15093,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     journalId?: StringFieldUpdateOperationsInput | string
     sharedByUserId?: StringFieldUpdateOperationsInput | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type JournalShareUncheckedUpdateManyWithoutSharedWithUserInput = {
@@ -15016,6 +15102,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     journalId?: StringFieldUpdateOperationsInput | string
     sharedByUserId?: StringFieldUpdateOperationsInput | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type EntryAnalysisUpdateWithoutUserInput = {
@@ -15074,11 +15162,15 @@ export namespace Prisma {
     createdAt?: Date | string
     sharedByUserId: string
     sharedWithUserId: string
+    allowEdit?: boolean
+    allowViewAnalysis?: boolean
   }
 
   export type JournalShareUpdateWithoutJournalInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
     sharedByUser?: UserUpdateOneRequiredWithoutJournalSharesNestedInput
     sharedWithUser?: UserUpdateOneRequiredWithoutSharedWithMeNestedInput
   }
@@ -15088,6 +15180,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sharedByUserId?: StringFieldUpdateOperationsInput | string
     sharedWithUserId?: StringFieldUpdateOperationsInput | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type JournalShareUncheckedUpdateManyWithoutJournalInput = {
@@ -15095,6 +15189,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sharedByUserId?: StringFieldUpdateOperationsInput | string
     sharedWithUserId?: StringFieldUpdateOperationsInput | string
+    allowEdit?: BoolFieldUpdateOperationsInput | boolean
+    allowViewAnalysis?: BoolFieldUpdateOperationsInput | boolean
   }
 
 

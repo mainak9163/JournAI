@@ -9,13 +9,18 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-function EditorComponent({ journal = { content: "{}", id: "", subject: "" } }) {
+function EditorComponent({ journal = { content: "{}", id: "", subject: "" }, allowEdit = true }) {
   const [subject, setSubject] = useState(journal.subject);
   const [content, setContent] = useState(journal.content);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleSubmitJournal = async () => {
+    if (!allowEdit) {
+      toast.error("You are not allowed to edit this journal");
+      return;
+    }
+
     if (!subject.trim() || !content.trim()) {
       toast.error("Please fill in both title and content");
       return;
