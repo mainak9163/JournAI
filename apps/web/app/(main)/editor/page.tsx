@@ -26,8 +26,7 @@ async function EditorPage({
 
   //user allowed to view the journal but whether allowed to edit or not needs to be checked
   // Get the cookies from the request
-  const cookieStore = cookies();
-
+  const cookieStore = await cookies();
   // Make the API call with credentials and cookies
   const res = await fetch(`https://journ-novel.vercel.app/api/journal/${entryId}`, {
     headers: {

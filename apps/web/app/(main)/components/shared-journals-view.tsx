@@ -1,5 +1,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/tailwind/ui/accordion";
-import { User } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/tailwind/ui/alert";
+import { Skeleton } from "@/components/tailwind/ui/skeleton";
+import { AlertCircle, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { JournalCard } from "./journal-card";
 
@@ -16,11 +18,13 @@ interface Analysis {
   growthAreas: string[];
   careerSuggestions: string[];
 }
+
 interface JournalWithPermissions {
   allowEdit: boolean;
   allowViewAnalysis: boolean;
   journal: Journal;
 }
+
 interface Journal {
   id: string;
   subject: string;
@@ -43,6 +47,62 @@ interface GroupedJournals {
   journals: JournalWithPermissions[];
 }
 
+// Skeleton component for journal cards
+const JournalCardSkeleton = () => (
+  <div className="border rounded-lg overflow-hidden flex flex-col bg-background">
+    <div className="p-4 border-b">
+      <Skeleton className="h-6 w-3/4 mb-2" />
+      <div className="flex justify-between items-center">
+        <Skeleton className="h-4 w-20" />
+        <Skeleton className="h-4 w-16" />
+      </div>
+    </div>
+    <div className="p-4 flex-1">
+      <Skeleton className="h-4 w-full mb-2" />
+      <Skeleton className="h-4 w-full mb-2" />
+      <Skeleton className="h-4 w-3/4" />
+    </div>
+    <div className="p-4 border-t flex justify-end gap-2">
+      <Skeleton className="h-9 w-9 rounded-md" />
+      <Skeleton className="h-9 w-9 rounded-md" />
+      <Skeleton className="h-9 w-9 rounded-md" />
+    </div>
+  </div>
+);
+
+// Skeleton for accordion groups
+const GroupSkeleton = () => (
+  <>
+    {Array.from({ length: 3 }).map((_, index) => (
+      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+      <div key={index} className="border border-border bg-card rounded-lg px-4">
+        <div className="py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-card-foreground">
+              <User className="h-4 w-4" />
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-4 w-16 ml-2" />
+            </div>
+            <Skeleton className="h-4 w-4 rounded-full" />
+          </div>
+        </div>
+
+        {/* Show expanded content for the first accordion */}
+        {index === 0 && (
+          <div className="pb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+              {Array.from({ length: 3 }).map((_, cardIndex) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                <JournalCardSkeleton key={cardIndex} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    ))}
+  </>
+);
+
 const SharedJournalsView = () => {
   const [groupedJournals, setGroupedJournals] = useState<GroupedJournals[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,6 +111,9 @@ const SharedJournalsView = () => {
   useEffect(() => {
     const fetchSharedJournals = async () => {
       try {
+        // Add a small delay to simulate network latency
+        setLoading(true);
+
         const response = await fetch("/api/shared-journals");
         if (!response.ok) throw new Error("Failed to fetch shared journals");
 
@@ -89,25 +152,28 @@ const SharedJournalsView = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-[200px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      <div className="w-full space-y-4">
+        <GroupSkeleton />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center text-destructive p-4 bg-destructive/10 rounded-md">
-        Error loading shared journals: {error}
-      </div>
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>Failed to load shared journals: {error}</AlertDescription>
+      </Alert>
     );
   }
 
   if (groupedJournals.length === 0) {
     return (
-      <div className="text-center text-muted-foreground p-4 bg-muted/50 rounded-md">
-        No journals have been shared with you yet.
-      </div>
+      <Alert>
+        <AlertTitle>No shared journals</AlertTitle>
+        <AlertDescription>No one remembers you yet.</AlertDescription>
+      </Alert>
     );
   }
 

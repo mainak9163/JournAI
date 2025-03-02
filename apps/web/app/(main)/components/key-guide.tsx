@@ -16,7 +16,7 @@ const APIKeyGuide = () => {
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl flex items-center gap-2">
-          <AlertCircle className="h-6 w-6 text-primary" />
+          <AlertCircle className="h-6 w-6 text-primary hidden sm:block" />
           How to Get Your API Key
         </CardTitle>
         <CardDescription>Follow these simple steps to get started with AI models</CardDescription>
@@ -34,7 +34,7 @@ const APIKeyGuide = () => {
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="gemini">Gemini (Recommended)</TabsTrigger>
+            <TabsTrigger value="gemini">Gemini (Free)</TabsTrigger>
             <TabsTrigger value="openai">OpenAI</TabsTrigger>
           </TabsList>
 

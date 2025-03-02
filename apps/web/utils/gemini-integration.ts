@@ -19,7 +19,7 @@ export const analyzeEntryWithGemini = async (entry: string) => {
 
   const model = new ChatGoogleGenerativeAI({
     apiKey,
-    modelName: "gemini-1.0-pro", // Free Gemini model
+    modelName: "gemini-2.0-flash", // Free Gemini model
     temperature: 0,
   });
 
@@ -140,7 +140,7 @@ export const qaWithGemini = async (
     // Initialize Gemini model
     const model = new ChatGoogleGenerativeAI({
       apiKey,
-      modelName: "gemini-1.0-pro",
+      modelName: "gemini-2.0-flash",
       temperature: 0,
       maxOutputTokens: 1024,
       topP: 0.8,

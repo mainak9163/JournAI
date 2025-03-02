@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/tailwind/ui/sidebar";
-import { MessagesSquare, Notebook, PieChart, Settings, Users2 } from "lucide-react";
+import { Calendar, MessagesSquare, Notebook, PieChart, Settings, Users2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -19,6 +19,11 @@ const items = [
     title: "Journals",
     href: "/journals",
     icon: Notebook,
+  },
+  {
+    title: "Calendar",
+    href: "/calendar",
+    icon: Calendar,
   },
   {
     title: "Sentiment Analysis",

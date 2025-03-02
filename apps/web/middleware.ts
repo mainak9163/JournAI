@@ -37,9 +37,10 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Check for required auth cookies
-  const csrfToken = request.cookies.get("__Host-authjs.csrf-token");
-  const sessionToken = request.cookies.get("__Secure-authjs.session-token");
-  const callbackUrl = request.cookies.get("__Secure-authjs.callback-url");
+  const csrfToken = request.cookies.get("__Host-authjs.csrf-token") || request.cookies.get("authjs.csrf-token");
+  const sessionToken =
+    request.cookies.get("__Secure-authjs.session-token") || request.cookies.get("authjs.session-token");
+  const callbackUrl = request.cookies.get("__Secure-authjs.callback-url") || request.cookies.get("authjs.callback-url");
 
   // Check if all required cookies exist
   const isAuthenticated = csrfToken && sessionToken && callbackUrl;
