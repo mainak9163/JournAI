@@ -1,104 +1,76 @@
-<a href="https://novel.sh">
-  <img alt="Novel is a Notion-style WYSIWYG editor with AI-powered autocompletions." src="https://novel.sh/opengraph-image.png">
-  <h1 align="center">Novel</h1>
-</a>
+# JournAI: Your Intelligent Journaling Companion 🌟📓
 
-<p align="center">
-  An open-source Notion-style WYSIWYG editor with AI-powered autocompletions. 
-</p>
+## 🚀 Project Overview
 
-<p align="center">
-  <a href="https://news.ycombinator.com/item?id=36360789"><img src="https://img.shields.io/badge/Hacker%20News-369-%23FF6600" alt="Hacker News"></a>
-  <a href="https://github.com/steven-tey/novel/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/steven-tey/novel?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
-  </a>
-  <a href="https://github.com/steven-tey/novel"><img src="https://img.shields.io/github/stars/steven-tey/novel?style=social" alt="Novel.sh's GitHub repo"></a>
-</p>
+JournAI is a cutting-edge journaling application that transforms your writing experience through AI-powered insights, mood tracking, and personal analysis. Built with the latest web technologies, JournAI offers a seamless, intelligent, and deeply personal journaling journey.
 
-<p align="center">
-  <a href="#introduction"><strong>Introduction</strong></a> ·
-  <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
-  <a href="#setting-up-locally"><strong>Setting Up Locally</strong></a> ·
-  <a href="#tech-stack"><strong>Tech Stack</strong></a> ·
-  <a href="#contributing"><strong>Contributing</strong></a> ·
-  <a href="#license"><strong>License</strong></a>
-</p>
-<br/>
+![image](https://github.com/user-attachments/assets/b9cb5022-ee89-4c20-84c0-7a740a17efa7)
 
-## Docs (WIP)
 
-https://novel.sh/docs/introduction
+## ✨ Key Features
 
-## Introduction
+### 🧠 Intelligent Journaling
+- **Advanced AI-Powered Insights**
+  - Personality analysis using state-of-the-art AI
+  - Mood detection and visualization
+  - Deep emotional intelligence tracking
 
-[Novel](https://novel.sh/) is a Notion-style WYSIWYG editor with AI-powered autocompletions.
+### 📝 Rich Editing Experience
+- **Novel Editor Integration**
+  - Distraction-free writing environment
+  - Rich text formatting
+  - Smooth, responsive editing experience
 
-https://github.com/steven-tey/novel/assets/28986134/2099877f-4f2b-4b1c-8782-5d803d63be5c
+### 🌈 Mood Tracking
+- **Visual Mood Representation**
+  - Color-coded mood tracking
 
-<br />
+### 🔍 Intelligent Search & Retrieval
+- **AI-Powered Journal Navigation**
+  - Semantic search using Pinecone vector database
+  - Intelligent journal indexing
+  - Chat with your journal archives
 
-## Deploy Your Own
+### 📅 Comprehensive Calendar View
+- **Journal Timeline**
+  - Easy journal entry navigation
+  - Monthly and yearly views
+  - Quick entry access
 
-You can deploy your own version of Novel to Vercel with one click:
+## 🛠 Tech Stack
 
-[![Deploy with Vercel](https://vercel.com/button)](https://stey.me/novel-deploy)
+### Frontend
+- Next.js 14
+- React
+- Tailwind CSS
+- Shadcn UI
+- Novel Editor
 
-## Setting Up Locally
+### Backend
+- Prisma ORM
+- PostgreSQL Database
+- Turbo Monorepo
 
-To set up Novel locally, you'll need to clone the repository and set up the following environment variables:
+### AI & Intelligence
+- Gemini AI (or OpenAI)
+- Pinecone Vector Database
+- Embedding Technologies
 
-- `OPENAI_API_KEY` – your OpenAI API key (you can get one [here](https://platform.openai.com/account/api-keys))
-- `BLOB_READ_WRITE_TOKEN` – your Vercel Blob read/write token (currently [still in beta](https://vercel.com/docs/storage/vercel-blob/quickstart#quickstart), but feel free to [sign up on this form](https://vercel.fyi/blob-beta) for access)
+### Authentication
+- Next-Auth
+- Credential & OAuth Providers
 
-If you've deployed this to Vercel, you can also use [`vc env pull`](https://vercel.com/docs/cli/env#exporting-development-environment-variables) to pull the environment variables from your Vercel project.
+---
 
-To run the app locally, you can run the following commands:
+### 🌟 Star the Project
 
-```
-pnpm i
-pnpm dev
-```
+If you find JournAI helpful, please consider giving us a star on GitHub! ⭐
 
-## Cross-framework support
+## 🙏 Acknowledgements
 
-While Novel is built for React, we also have a few community-maintained packages for non-React frameworks:
-
-- Svelte: https://novel.sh/svelte
-- Vue: https://novel.sh/vue
-
-## VSCode Extension
-
-Thanks to @bennykok, Novel also has a VSCode Extension: https://novel.sh/vscode
-
-https://github.com/steven-tey/novel/assets/28986134/58ebf7e3-cdb3-43df-878b-119e304f7373
-
-## Tech Stack
-
-Novel is built on the following stack:
-
-- [Next.js](https://nextjs.org/) – framework
-- [Tiptap](https://tiptap.dev/) – text editor
-- [OpenAI](https://openai.com/) - AI completions
-- [Vercel AI SDK](https://sdk.vercel.ai/docs) – AI library
-- [Vercel](https://vercel.com) – deployments
-- [TailwindCSS](https://tailwindcss.com/) – styles
-- [Cal Sans](https://github.com/calcom/font) – font
-
-## Contributing
-
-Here's how you can contribute:
-
-- [Open an issue](https://github.com/steven-tey/novel/issues) if you believe you've encountered a bug.
-- Make a [pull request](https://github.com/steven-tey/novel/pull) to add new features/make quality-of-life improvements/fix bugs.
-
-<a href="https://github.com/steven-tey/novel/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=steven-tey/novel" />
-</a>
-
-## Repo Activity
-
-![Novel.sh repo activity – generated by Axiom](https://repobeats.axiom.co/api/embed/2ebdaa143b0ad6e7c2ee23151da7b37f67da0b36.svg)
-
-## License
-
-Licensed under the [Apache-2.0 license](https://github.com/steven-tey/novel/blob/main/LICENSE).
+- [Next.js](https://nextjs.org/)
+- [Prisma](https://www.prisma.io/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [Novel Editor](https://novel.sh/)
+- [Pinecone](https://www.pinecone.io/)
